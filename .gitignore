@@ -1,0 +1,6 @@
+# ignore additional files
+*.Rproj
+.Rhistory
+.RData
+.DS_Store
+.Rproj.user/

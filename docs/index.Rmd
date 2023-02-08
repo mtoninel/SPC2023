@@ -5,7 +5,11 @@ date: "2/6/2023"
 output: 
   html_document:
     toc: true
-    theme: united
+    toc_float: true
+    toc_collapsed: true
+    toc_depth: 3
+    number_sections: true
+    theme: yeti
     
 ---
 
@@ -16,17 +20,21 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', warning = FALSE, messag
 # Introduction
 The course will give an overview of R as an instrument for programming and efficient scripting. It will start with the basics and then develop into an exploration of ways to improve code performance and structure. All of the materials from the lectures can be found [here](https://www.ceredalab.com/SPC/index.html), with relevant information related to the authors as well.
 
-## Day 1 - Programming history and R
-#### A brief history of programming
+# Day 1 - Programming history and R
+## A brief history of programming
 The existence of programming languages is strongly related to how computers work and how they have been developed during their history. Architecture is the base on which languages are built.
 Computers are built and organized in what is known as [Von Neumann architecture](), in this sense we have a CPU which is the main component involved in calculations. This is in turn composed of an arithmetic/logic unit a control unit and registers (MAR and MDR) on which data is kept pre-operation after it has been sourced from the memory unit (RAM). In between the memory and the CPU lies the _cache_ (L1, L2) which hosts information that can be retrieved in a faster way than from memory. 
 
-![Von Neumann architecture for computers.](http://computerscience.gcse.guru/wp-content/uploads/2016/04/Von-Neumann-Architecture-Diagram.jpg#center)
+<div align="center">
+  <img src="http://computerscience.gcse.guru/wp-content/uploads/2016/04/Von-Neumann-Architecture-Diagram.jpg">
+</div>
 
 So, **what is a program**? Memory and CPUs can only understand numbers, specifically bits of information, 0s and 1s and are only able to perform very simple operations, meanwhile higher-level operations are achieved by using _algorithms_ which compound simpler operations iteratively. The first step towards translating bit instructions into alphanumeric meaningful words was the _Assembly_ language. Assembly worked by using procedure (or routines) calling, we can think of routines as blocks of codes to execute in larger scripts.
 Part of this process was also involving memory management procedures, with pre-allocated memory (_static_) to store all global variables in a last-in first-out way and this set the initial mechanism for running programs, other parts of memory include the _stack_, which is the part related to local variables and programs and then a part of the memory reserved to code (or text in general), called _text_ and finally a part known as _heap_ which is, in line with its name, very dynamic and changes in relation to changes in need at runtime, this part of memory is the one which can be controlled by the programmer (in **compiled languages** usually) or by programs themselves (in **interpreted languages** usually) as well, here programs can be restricted in terms of usage. This was mainly engineered to avoid memory conflicts between running programs, so it became crucial to control the system and _assign memory_ to running processes in a consistent and stable manner. This task was tackled by developing **operating systems** (OS).
 
-![Memory allocation strategy, dependant on OS configuration.](https://study.com/cimages/multimages/16/1f3a8c28-4082-4714-b6fa-6bb81804095b_screen_shot_2017-12-01_at_1.31.10_pm.png#center)
+<div align="center">
+  <img src="https://i.stack.imgur.com/HOY4C.png">
+</div>
 
 The OS is instrumental in establishing order in resource and memory management across programs running on the same machine from the same or different users. Another step towards this is to share a machine's CPU for _time-sharing_ across processes running at the same time, all this is programmed within the OS, which is tasked with managing resources.
 In the 80s and 90s, with the advent of networking, distributed systems were created in which programs could be run on different machines by taking advantage of web-based protocols (like `ssh`).
@@ -59,8 +67,8 @@ rm(random)
 
 In the above case we can check that R, an interpreted language, masks the user with the ability to manage an eventual error for the sake of code usability, the user then misses a chance to catch an eventual mistake in the code, maybe while generating the index above, an `NA` was not wanted, but R does not signal its presence while subsetting `random`. This mechanisms of silent coercion are widespread in R and the user should always be aware of when they can happen since they can represent a scenarion of bug generation and data loss.
 
-#### Data structures and Object-oriented programming
-##### Vectors
+## Data structures and Object-oriented programming
+### Vectors
 In R, we can have beginner data structures (i.e. vectors, matrices and dataframes) and more advanced structures (i.e. S3, S4 and RC). Simpler data structures can further be subset into _homogeneous_ or _heterogeneous_ data structures. 
 **Atomic vectors** and **lists** differ due to the type of data they can contain, one is formed by elements of the same type, while lists are heterogeneous.
 Operations based on vectors in R are element-wise, meaning that vector-vector operations are done element by element (_with the shorter vector being recycled_) while scalar-vector operations broadcast the operation to each single element of a vector. 
@@ -104,7 +112,7 @@ dbls <- rbinom(100, size=1, prob=0.5)
 dbls <- rnbinom(100, size=1, prob=0.75)
 ```
 
-##### Matrices
+### Matrices
 Two-dimensional data in R is represented by the `Matrix` class and can be constructed using the following code:
 
 ```{r}
@@ -131,10 +139,10 @@ matmul <- x %*% y
 matmul
 ```
 
-##### Lists
+### Lists
 Lists are probably the most programmatically complex objects in R, they contain different types and have different lenght with or without named elements. They represent the very first interface to **Object-oriented programming**.
 
-##### Object-Oriented (OO) data type
+#### Object-Oriented (OO) data type
 Here we are moving from basic structures to objects which can contain data and are associated to methods which are able to operate on the data itself. It is a mode of operation borrowed from C++. A **class** contains _methods_ and _attributes_, the whole creates one of the main instances of OOP. Class elements can inherit from other objects which share the same parent. The main thing to understand is that R, by default, treats everything as an object. Everything, literally _everything_, has attributes and maybe even methods, from basic vectors to complex classes.
 
 ```{r}
@@ -222,7 +230,7 @@ ba@balance <- sum(ba, 200)
 ba@balance
 ```
 
-##### I/O - Working with files
+### I/O - Working with files
 In R, we are able to work with files by interacting with the host OS and filesystem. The function `read.table()` is a built-in which helps the user to read files. In addition, by using `write.table()` we can save a table object with a specified name and separator.
 R also provides a specific function to `dump()` a whole environment image into a variable which can be save, although this is highly inefficient.
 
@@ -230,3 +238,126 @@ Additionally the `tidyverse`, through `readr`, provides a faster interface to ac
 
 An interesting binary file format to save objects in R but which can be read by any other programming languages is the one provided by the `feather` library.
 
+# Day 2 - Programming practices and Data manipulation
+## Parallel Programming
+When programmming something using _interpreted_ (vs _compiled_, i.e. C++) languages like R, primarily thought as interactive, it is important to stop and understand how functions work in terms of operations and I/O instead of just getting into the thick of it and start using up resources. This is primarily concerning memory requirements when working on a shared platform as well as actual CPU resources. _Dynamic vs Static_ libraries.
+To provide an example of the performance that can be obtained by programming in compiled languages, let's imagine a scenario by which we have a series of DNA sequences and we want to get all of the 3-base _kmers_ which are present in each sequence. One relatively straightforward way would be to first generate an empty sequence by kmer matrix and then, after having determined all the possible kmers in the sequences (a dictionary), start counting and indexing any occurrence into the appropriate position. Although this works well with short sequences, the advantages which come from the conjunction of [binary encoding](https://www.sciencedirect.com/science/article/pii/S0888754316300854) and the use of C++ which allows the direct accession of space on memory grant amazing advantages. 
+Brush-up on the definition of a [core and a thread](https://www.temok.com/blog/cores-vs-threads/)?
+But another way to brute-force achieving speed is to use more cores and threads! In order to take advantage of the presence of multiple cores, we can run different processes by sizing the data into smaller chunks (easier, less efficient) or make a program **multithread**, this is the best way possible but also the most expensive in terms of implementation time. By multithreading we split up the instructions of a program into spawning different children processes. Parallelization comes with a few challenges, including timing and managing execution I/O across child processes. There are cases in which data needs to be modified by different processes thus we need to ensure that we are not compromising the outputs and/or mixing information from different processes.
+
+## Graphics Processing Units
+GPUs work very well for linear algebra calculations, especially linear algebra concepts and operations. GPUs are very "dumb" compare to CPUs in terms of the kinds of operations and the complexity of operations that they can do, but what they were initially designed to do (rendering graphics, therefore large matrices) proved also very powerful when applied to operations involving matrices. These cards have a very different architecture as opposed to the Von Neumann one seen previosuly, they contain many more threads doing the same operation on the same data, which needs, _crucially_, to be copied on the CPU itself, which will also store the final object after computation which will need to be re-imported into memory.
+
+## OOP History and Paradigms
+Programming has taken up many shapes during its history, we can have _unstructured programming_ which then evolved into _procedural programming_ by definig re-usable functions which otherwise need repetition. The next step in complexity is represented by _modular programming_, by which modules of code are utilized and interconnect to provide functionality across different files. The final step is represented by the _object-oriented_ paradigm, by which objects are identified by a set of methods coupled with the needed data, which in turn is strictly related to the methods. 
+Let's imagine that we want to create a new genomics object in which to store genomic data, this object can be as general as possible, with specific properties and methods. The former might contain IDs from different classification systems, the annotation and the organism of origin while the latter might instead contain actions which can be performed on the object such as alignment, changes in bases or calculation of GC content etc...
+In contrast to procedural programming, the program flow in OOP is said to be "message oriented", by this meaning that the user talks to objects by sending messages through methods.
+The interesting part of OOP is that classes are not just created to be on their own, instead **relationships** between objects is desirable as a distinguished feature, for example an object representing a transcript can _be part of_ an object representing a chromosome and can _inherit_ actions which can be performed on other elements from the chromosome object, for example determining start and end locations, which could also be use for a genomic sequence, which in turn can be another class under the chromosome one. 
+Methods defined in a parent class are re-implemented in the daughter classes, in this way in the code we can always call the same method and the correct implementation will always be selected since it is specified in the appropriate class, this is called _polymorphism_.
+
+## Data Manipulation and Transformations
+Base R functions for manipulating basic data structures. One of the most potent family of functions in R is the *apply one. In this case we can iterate over elements of a list or columns of a dataframe iteratively by applying a custom function without the need to declare it explicitly outside.
+
+```{r}
+# Use apply over a list
+l = list(   1:5
+          , c("a","b")
+          , c(T,F,T,T) )
+
+# apply length to the list elements
+lapply(l, length)
+```
+
+Then we can operate over dataframe numerical columns extracting correlation values like the following, using the function `pairs()`.
+
+```{r}
+## quick graphical overview by the scatterplot matrix
+d <- data.frame('id'=runif(100), 'score'=runif(100), 'value'=runif(100))
+
+pairs(d[,c("id", "score","value")]
+      , lower.panel = panel.smooth
+      , upper.panel = NULL)
+```
+
+Operations on numerical 2D data like matrices can be operated upon by using a couple of very powerful functions like `scale()` and `sweep()`.
+
+```{r}
+# Showcase the functions above
+m = matrix(round(runif(9),2),nr=3,nc=3) 
+
+# Scale (mean 0 and variance 1)
+scale(m, center = TRUE, scale = TRUE)
+
+# Sweep (apply a vector over a matrix summarizing an operation)
+# median value of each row of the matix
+row.med <- apply(m, MARGIN = 1, FUN = median)
+# subtracting the median value of each row
+sweep(m, MARGIN = 1, STATS = row.med, FUN = "-")
+```
+
+Of course the functionality of many of these functions has been superseded and augmented by the ones provided by the `dplyr` package, at least in terms of operating over dataframes.
+
+# Day 3
+## Code optimization and performance testing in R
+Functions in R map a repetitive behaviour onto an input and generate a return value. In R, `.Primitive` is used to call a function from the underlying C language. In functions, scoping refers to how a value is assigned to an environment variable, this will test whether the variable already exists or not and whether the variable exists in a parent or child environment. _Scoping_ is divided in both static and dynamic. In static scoping we can have four basic principles including name masking, by which if a name is not defined inside a function, R will look for it in the parent environment. Another feature is dynamic lookup, by which we can have multiple assignments to the same value along the code.
+
+```{r}
+x <- 1
+y <- 3
+
+# Demonstrate name masking
+fun <- function(){
+  x * y  
+}
+
+fun()
+
+# Demonstrate dynamic look-up
+dl <- function(){
+  x <- x + 1
+}
+
+# first value
+x <- 0
+dl()
+
+# second value
+x <- 2
+dl()
+```
+
+In the case we end up calling a variable inside a function which does not exists, R will throw an error since it cannot find the variable anywhere in the function or in the parent environment. We can check the existance of variables by using `exist()`.
+While defining a function we can check the existance of specific argument using the `missing()` function inside a function in a conditional which also includes the stopping of the function in case of positive status with `stop()`.
+This concept extends to _condition handling and recovery_ with the `try()` and `catch()` couple of commands. Additionally, by using `tryCatch()` we can extend this behaviour further by encapsulating both command, warning and error in the same function which will decide between warning or error.
+
+```{r}
+# tryCatch demonstration
+
+```
+
+In R, there are a few functions which help with debugging functions, we can set a `debug()` function working in order to check the status of a function. Additionally one can use `browse()` and `traceback()` to check whether the function is doing the correct thing.
+
+Also, one can check for function performance and benchmarking with specific libraries in R like `rbenchmark::benchmark()`. Calling this function, we can manage the avergae execution time and get data from the execution of more than one function altogether.
+
+Optimizing code to make it faster is an iterative process which essentially entails three steps including _finding the bottleneck_, trying to _eliminate it_ or substitute it and then _repeat the process_ until the code is "fast enough". These steps are facilitated by profiling the code, some demonstration is present below.
+
+```{r}
+# Code profiling
+```
+
+The main thing is to understand how R handles every calculation, this procedure is known as **profiling** can be achieved in R by different means and packages. We can demonstrate this by applying this workflow to a linear regression setting.
+
+```{r}
+# Linear regression code profiling
+```
+
+## Bioconductor for biological data in R
+Bioconductor was initially created with the idea in mind to generate an _open-source_ place based on the R programming language on which to store packages and projects for the analysis of genomics data. Given the nature of Bioconductor, it encourages contributions and learning through massive documentation bundled with every package.
+Bioconductor packages are focused on deploying many different functionalities spanning from data visualization for genomics to differential expression analysis, all of this coupled with the added learning bonuses coming from the release of _vignettes_. 
+Some of the most used packages in Bioconductor used for _genome arithmetics_ include `IRanges` and `GenomicRanges`. Since the genome is a linear one-dimensional coordinate system, we can perform different kinds of operations related for instance to overlaps. For example in the former package, we can define a set of three ranges by using the following code:
+
+Most of the provided operations above are recalling ones already existant in C-based packages like [bedtools](https://bedtools.readthedocs.io/en/latest/). 
+
+Another way of visualizing genomics elements is through strings, after all DNA sequences are just sets of letters. A useful suite of commands is the one provided by the package `Biostrings`. This provides a multitude of functions that provide the ability to generate for instance _reverse complements_ of the original sequence. This for instance is useful since in FASTA format files, the genes are always present with their forward strand and therefore we might need the reverse complement if the gene is antisense. This capability is achieved with the `DNAString` class and its associated methods.
+
+Bioconductor already contains many packages which gather genetic information for many model organisms, one of them is `BSgenome` while others live within the `.org` family of packages.

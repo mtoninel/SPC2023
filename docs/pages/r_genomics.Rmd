@@ -1,0 +1,92 @@
+---
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', warning = FALSE, message = FALSE)
+```
+## R for biological data
+### Bioconductor for biological data in R
+Bioconductor was initially created with the idea in mind to generate an *open-source* place based on the R programming language on which to store packages and projects for the analysis of genomics data.
+Given the nature of Bioconductor, it encourages contributions and learning through massive documentation bundled with every package.
+Bioconductor packages are focused on deploying many different functionalities spanning from data visualization for genomics to differential expression analysis, all of this coupled with the added learning bonuses coming from the release of *vignettes*.
+Some of the most used packages in Bioconductor used for *genome arithmetics* include `IRanges` and `GenomicRanges`.
+Since the genome is a linear one-dimensional coordinate system, we can perform different kinds of operations related for instance to overlaps.
+For example in the former package, we can define a set of three ranges by using the following code:
+
+Most of the provided operations above are recalling ones already existant in C-based packages like [bedtools](https://bedtools.readthedocs.io/en/latest/).
+
+Another way of visualizing genomics elements is through strings, after all DNA sequences are just sets of letters.
+A useful suite of commands is the one provided by the package `Biostrings`.
+This provides a multitude of functions that provide the ability to generate for instance *reverse complements* of the original sequence.
+This for instance is useful since in FASTA format files, the genes are always present with their forward strand and therefore we might need the reverse complement if the gene is antisense.
+This capability is achieved with the `DNAString` class and its associated methods.
+
+Bioconductor already contains many packages which gather genetic information for many model organisms, one of them is `BSgenome` while others live within the `.org` family of packages.
+
+## Genomics data visualization
+### Plotting basics in R
+One of the main uses for data visualization is to perform _exploratory data analysis_ (EDA). The basic library in R for creating customisable and clear visualization is `ggplot`. This package is inserted within a rich environment of data manipulation tools and visualization called `tidyverse`.
+The fundamental idea related to data visualization is to **communicate a story** using the data at our disposal. Relationships hidden in data stand out with proper visualization techniques and ideas. That's the thing, it's not only about dull application but also about creativity and storytelling.
+This phenomenon is especially relevant while working with huge datasets where relationships can exist in many directions and between many variables at once, and where each variable might be represented by thousands or millions of observations. This is exactly the case for genomic data sets describing relevant biological information.
+
+```{r}
+# Generative art with R example with folded code?
+```
+
+In its basic functionality, `ggplot` exploits what is known as "the grammar of graphics", `gg`. This consists of a _layered_ mechanism of instructions. We start by defining which variables of interest are to map to which plot characteristic between _color_, _fill_, _shape_ and _size_. This happens by using the `aes()` function within either a direct `ggplot` call or within `geoms`. `geoms` are used to define what kind of plot to use, and this of course is going to depend on which variable relationships we want to highlight. 
+One of the paradigms of plotting data is the variable-chart type relationship. By this we mean the right coupling between chart type and appropriate variable nature to plot (i.e. _continous_ vs _discrete_).
+
+These are the main relationships to take into account when plotting:
++ One variabel, continous: histogram, density curve (_distributions_)
++ One variable, discrete: bar chart, pie chart (_proportions_)
++ Two variables, continuous: scatter plot, 2D density kernels (_distributions_)
++ Two variables, discrete: confusion matrices, heatmaps (_common occurence_) 
++ Two variables, one continuous and one categorical: box plot, violin plot (_distributions_)
+
+This, in practice, for a minimal plot between two continuous variables:
+
+```{r}
+library(ggplot2)
+
+data <- mtcars
+
+# Plot the relationship between a car displacement and mpg, colored by number of cylinders and give a dot size related to the car's weight
+# From this it appears clear how heavier cars have bigger engines, consume more and have more cylinders.
+ggplot(data, aes(x = disp, y = mpg, col = as.factor(cyl))) +
+    geom_smooth(color='black') +
+    geom_point(aes(size = wt), alpha=0.8) +
+    theme_minimal() 
+```
+Obviously there exist many extensions which add functionality to the basic package. For example we can plot maps with `map_data` (or `leaflet` widgets) or alluvial diagrams (a subset of Sankey diagrams) with `ggalluvial`. Another useful package when studying clonal evolution (in tumors particularly) is `fishplot`, which creates publication-ready plots.
+
+### Plotting heatmaps
+Heatmaps are visual representations of tabular data. One of the most used packages to create heatmaps is `pheatmap` and its more personalizable counterpart [`complexHeatmap`](https://jokergoo.github.io/ComplexHeatmap-reference/book/).
+
+```{r}
+library(ComplexHeatmap)
+```
+
+### UpSet plots
+Set operations can be depicted with the use of Venn diagrams, but what it we need more complex operations spanning more than four sets? (the Venn of which can already be quite confusing)
+In this use case we can check out the package `UpSetR` which will produce plots line the one below. In this case we can see how it is useful in exploring multiple set relationships all at once.
+UpSet plots can also be thought of as extensions of heatmaps, by coloring sets by intersection size and annotations.
+
+### Oncoprint
+OncoPrint became very famous in CNV studies in cancer, these plot are dedicated to checking out gene alterations as matrices where samples are columns and genes are rows.
+
+### cBioPortal for Cancer Genomics
+This is a [website hosted by MSKCC](https://www.cbioportal.org/) where cancer cases can be collected in repositories which can be queried as normal SQL databases to extract relevant metadata and genomic data coming from a great amount of studies. These sources can be accessed via the web and can be downloaded to re-create plots. 
+
+### Genome-level Heatmaps
+Here we are producing genome-level heatmaps divided by chromosome and/or genes. These can be further decorated and transformed into visually pleasing plots by using additional libraries like `circlize`, which is the R implementation of [Circos plots](http://circos.ca/).
+
+```{r}
+library(circlize)
+```

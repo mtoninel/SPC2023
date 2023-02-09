@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R Programming Course – prog_base</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">R Programming Course</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../pages/prog_base.html" aria-current="page">
+ <span class="menu-text">Basics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/r_paradigms.html">
+ <span class="menu-text">R</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/r_genomics.html">
+ <span class="menu-text">Genomics</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mtoninel"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/toninells"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div class="quarto-toggle-container">
+                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+              </div>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a-brief-history-of-programming" id="toc-a-brief-history-of-programming" class="nav-link active" data-scroll-target="#a-brief-history-of-programming">A brief history of programming</a>
+  <ul class="collapse">
+  <li><a href="#the-architecture" id="toc-the-architecture" class="nav-link" data-scroll-target="#the-architecture">The Architecture</a></li>
+  <li><a href="#programs" id="toc-programs" class="nav-link" data-scroll-target="#programs">Programs</a></li>
+  <li><a href="#memory" id="toc-memory" class="nav-link" data-scroll-target="#memory">Memory</a></li>
+  </ul></li>
+  <li><a href="#parallel-programming" id="toc-parallel-programming" class="nav-link" data-scroll-target="#parallel-programming">Parallel Programming</a>
+  <ul class="collapse">
+  <li><a href="#the-basics" id="toc-the-basics" class="nav-link" data-scroll-target="#the-basics">The Basics</a></li>
+  <li><a href="#graphics-processing-units" id="toc-graphics-processing-units" class="nav-link" data-scroll-target="#graphics-processing-units">Graphics Processing Units</a></li>
+  <li><a href="#oop-history-and-paradigms" id="toc-oop-history-and-paradigms" class="nav-link" data-scroll-target="#oop-history-and-paradigms">OOP History and Paradigms</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="a-brief-history-of-programming" class="level2">
+<h2 class="anchored" data-anchor-id="a-brief-history-of-programming">A brief history of programming</h2>
+<section id="the-architecture" class="level3">
+<h3 class="anchored" data-anchor-id="the-architecture">The Architecture</h3>
+<p>The existence of programming languages is strongly related to how computers work and how they have been developed during their history. Architecture is the base on which languages are built. Computers are built and organized in what is known as <a href="">Von Neumann architecture</a>, in this sense we have a CPU which is the main component involved in calculations. This is in turn composed of an arithmetic/logic unit a control unit and registers (MAR and MDR) on which data is kept pre-operation after it has been sourced from the memory unit (RAM). In between the memory and the CPU lies the <em>cache</em> (L1, L2) which hosts information that can be retrieved in a faster way than from memory.</p>
+<div data-align="center">
+<p><img src="http://computerscience.gcse.guru/wp-content/uploads/2016/04/Von-Neumann-Architecture-Diagram.jpg"></p>
+</div>
+</section>
+<section id="programs" class="level3">
+<h3 class="anchored" data-anchor-id="programs">Programs</h3>
+<p>So, <strong>what is a program</strong>? Memory and CPUs can only understand numbers, specifically bits of information, 0s and 1s and are only able to perform very simple operations, meanwhile higher-level operations are achieved by using <em>algorithms</em> which compound simpler operations iteratively. The first step towards translating bit instructions into alphanumeric meaningful words was the <em>Assembly</em> language. Assembly worked by using procedure (or routines) calling, we can think of routines as blocks of codes to execute in larger scripts. Part of this process was also involving memory management procedures, with pre-allocated memory (<em>static</em>) to store all global variables in a last-in first-out way and this set the initial mechanism for running programs, other parts of memory include the <em>stack</em>, which is the part related to local variables and programs and then a part of the memory reserved to code (or text in general), called <em>text</em> and finally a part known as <em>heap</em> which is, in line with its name, very dynamic and changes in relation to changes in need at runtime, this part of memory is the one which can be controlled by the programmer (in <strong>compiled languages</strong> usually) or by programs themselves (in <strong>interpreted languages</strong> usually) as well, here programs can be restricted in terms of usage. This was mainly engineered to avoid memory conflicts between running programs, so it became crucial to control the system and <em>assign memory</em> to running processes in a consistent and stable manner. This task was tackled by developing <strong>operating systems</strong> (OS).</p>
+<div data-align="center">
+<p><img src="https://i.stack.imgur.com/HOY4C.png"></p>
+</div>
+<p>The OS is instrumental in establishing order in resource and memory management across programs running on the same machine from the same or different users. Another step towards this is to share a machine’s CPU for <em>time-sharing</em> across processes running at the same time, all this is programmed within the OS, which is tasked with managing resources. In the 80s and 90s, with the advent of networking, distributed systems were created in which programs could be run on different machines by taking advantage of web-based protocols (like <code>ssh</code>). After the initial rise of OSs, forms of <em>mass storage</em> were needed in order to have a memory support built into the computer itself, this started with CDs and then hard-drives, which nowadays have been substituted in large by faster technologies such as SSDs and cloud-based solutions for storing data.</p>
+</section>
+<section id="memory" class="level3">
+<h3 class="anchored" data-anchor-id="memory">Memory</h3>
+<p>All along, <strong>expressive languages</strong> were also developed which were needed to get a more abstract sense of operations and allow for more comprehensible syntax for more complex operations like cycling and conditional execution, introduced a grammar based on data structures, types and objects. Ultimately this allows the programmer to focus on the actual program itself more than its implementation.</p>
+<p>So summed up, the advantages of languages include: + Loops + Conditional execution + Code blocks + Operators + Data structures (specifications) + Function definition</p>
+<p>Objects in memory are always stored sequentially and specifically, matrices and tabular data in Fortran systems (and the majority of other languages) are stored column-wise, so trying to index a matrix like <code>A[57] == A[7,6]</code> means that the 57th element of a matrix in memory is equal to the 7th element on the 6th column in the R object (which is 1-indexed).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>index <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="cn">NA</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>random <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Try to use NA as index (should return an NA in that index position)</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># This highlights a fault in R's permessibility, here it does not alert the use for the sake of giving on answer</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>random[index]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5204957 0.4629572 0.8244709        NA</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+
+</div>
+<p>In the above case we can check that R, an interpreted language, masks the user with the ability to manage an eventual error for the sake of code usability, the user then misses a chance to catch an eventual mistake in the code, maybe while generating the index above, an <code>NA</code> was not wanted, but R does not signal its presence while subsetting <code>random</code>. This mechanisms of silent coercion are widespread in R and the user should always be aware of when they can happen since they can represent a scenarion of bug generation and data loss.</p>
+</section>
+</section>
+<section id="parallel-programming" class="level2">
+<h2 class="anchored" data-anchor-id="parallel-programming">Parallel Programming</h2>
+<section id="the-basics" class="level3">
+<h3 class="anchored" data-anchor-id="the-basics">The Basics</h3>
+<p>When programmming something using <em>interpreted</em> (vs <em>compiled</em>, i.e.&nbsp;C++) languages like R, primarily thought as interactive, it is important to stop and understand how functions work in terms of operations and I/O instead of just getting into the thick of it and start using up resources. This is primarily concerning memory requirements when working on a shared platform as well as actual CPU resources. <em>Dynamic vs Static</em> libraries. To provide an example of the performance that can be obtained by programming in compiled languages, let’s imagine a scenario by which we have a series of DNA sequences and we want to get all of the 3-base <em>kmers</em> which are present in each sequence. One relatively straightforward way would be to first generate an empty sequence by kmer matrix and then, after having determined all the possible kmers in the sequences (a dictionary), start counting and indexing any occurrence into the appropriate position. Although this works well with short sequences, the advantages which come from the conjunction of <a href="https://www.sciencedirect.com/science/article/pii/S0888754316300854">binary encoding</a> and the use of C++ which allows the direct accession of space on memory grant amazing advantages. Brush-up on the definition of a <a href="https://www.temok.com/blog/cores-vs-threads/">core and a thread</a>? But another way to brute-force achieving speed is to use more cores and threads! In order to take advantage of the presence of multiple cores, we can run different processes by sizing the data into smaller chunks (easier, less efficient) or make a program <strong>multithread</strong>, this is the best way possible but also the most expensive in terms of implementation time. By multithreading we split up the instructions of a program into spawning different children processes. Parallelization comes with a few challenges, including timing and managing execution I/O across child processes. There are cases in which data needs to be modified by different processes thus we need to ensure that we are not compromising the outputs and/or mixing information from different processes.</p>
+</section>
+<section id="graphics-processing-units" class="level3">
+<h3 class="anchored" data-anchor-id="graphics-processing-units">Graphics Processing Units</h3>
+<p>GPUs work very well for linear algebra calculations, especially linear algebra concepts and operations. GPUs are very “dumb” compare to CPUs in terms of the kinds of operations and the complexity of operations that they can do, but what they were initially designed to do (rendering graphics, therefore large matrices) proved also very powerful when applied to operations involving matrices. These cards have a very different architecture as opposed to the Von Neumann one seen previosuly, they contain many more threads doing the same operation on the same data, which needs, <em>crucially</em>, to be copied on the CPU itself, which will also store the final object after computation which will need to be re-imported into memory.</p>
+</section>
+<section id="oop-history-and-paradigms" class="level3">
+<h3 class="anchored" data-anchor-id="oop-history-and-paradigms">OOP History and Paradigms</h3>
+<p>Programming has taken up many shapes during its history, we can have <em>unstructured programming</em> which then evolved into <em>procedural programming</em> by definig re-usable functions which otherwise need repetition. The next step in complexity is represented by <em>modular programming</em>, by which modules of code are utilized and interconnect to provide functionality across different files. The final step is represented by the <em>object-oriented</em> paradigm, by which objects are identified by a set of methods coupled with the needed data, which in turn is strictly related to the methods. Let’s imagine that we want to create a new genomics object in which to store genomic data, this object can be as general as possible, with specific properties and methods. The former might contain IDs from different classification systems, the annotation and the organism of origin while the latter might instead contain actions which can be performed on the object such as alignment, changes in bases or calculation of GC content etc… In contrast to procedural programming, the program flow in OOP is said to be “message oriented”, by this meaning that the user talks to objects by sending messages through methods. The interesting part of OOP is that classes are not just created to be on their own, instead <strong>relationships</strong> between objects is desirable as a distinguished feature, for example an object representing a transcript can <em>be part of</em> an object representing a chromosome and can <em>inherit</em> actions which can be performed on other elements from the chromosome object, for example determining start and end locations, which could also be use for a genomic sequence, which in turn can be another class under the chromosome one. Methods defined in a parent class are re-implemented in the daughter classes, in this way in the code we can always call the same method and the correct implementation will always be selected since it is specified in the appropriate class, this is called <em>polymorphism</em>.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

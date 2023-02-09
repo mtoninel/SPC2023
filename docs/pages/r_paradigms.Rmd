@@ -1,0 +1,369 @@
+---
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', warning = FALSE, message = FALSE)
+```
+## Data structures
+### Vectors
+In R, we can have beginner data structures (i.e. vectors, matrices and dataframes) and more advanced structures (i.e. S3, S4 and RC).
+Simpler data structures can further be subset into *homogeneous* or *heterogeneous* data structures.
+**Atomic vectors** and **lists** differ due to the type of data they can contain, one is formed by elements of the same type, while lists are heterogeneous.
+Operations based on vectors in R are element-wise, meaning that vector-vector operations are done element by element (*with the shorter vector being recycled*) while scalar-vector operations broadcast the operation to each single element of a vector.
+
+```{r}
+# In R, we can function the structure function to check for the structure of the data 
+# This coerces the integer
+v <- c('q', 1, 'a', 2)
+
+# Look at structure
+str(v)
+
+# Additionally, we can set attributes to values for variables
+'a_name' <- attr(v, 'my_attribute')
+```
+
+Another functionally important aspect is to remind ourselves of the existance of approximations in calculations, in this case if we type the following:
+
+```{r}
+x <- (sqrt(2))**2
+x - 2 # Should return 0 but it does not
+```
+
+This happens due to the approximation that the machine provides, and this is why we need to pay a great deal of attention when using conditionals with `== 0`.
+This is partially rescued by the use of a function like the one `dplyr::near()`.
+
+Hand in hand with this concept is the one of *coercion*, by which object get converted from their original class to other classes.
+This in R happens either *implicitly* or *explicitly*.
+
+Creating sequences of numbers in R is fairly straightforward with many different functions available and we can generate both random sequences, repeated sequences or specific distributions (normal, poisson or others) by specifying the needed parameters.
+
+```{r}
+# Genrate 100 random doubles from 0 to 10
+dbls <- runif(100, min=0, max=10)
+
+# Sample 100 values from a standard normal distribution
+dbls <- rnorm(100, mean=0, sd=1)
+
+# Generate 100 random outcomes from a coin flip using a Bernoullu trial
+dbls <- rbinom(100, size=1, prob=0.5)
+
+# Sample 100 values from a negative binomial distribution with size and prob values
+dbls <- rnbinom(100, size=1, prob=0.75)
+```
+
+### Matrices
+Two-dimensional data in R is represented by the `Matrix` class and can be constructed using the following code:
+
+```{r}
+# Create a matrix
+mat <- matrix(runif(60), ncol=3)
+
+# Assign different dimensions
+dim(mat) <- c(3,20) # 3 rows 20 cols
+
+# Isolate the upper triangle of the matrix in index form
+idxs <- upper.tri(mat, diag = FALSE)
+```
+
+Expanding on operations, matrix multiplication in R is achieved with the operator `%*%` as such:
+
+```{r}
+# Create matrices
+x <- matrix(runif(10), ncol = 5)
+y <- matrix(runif(5), nrow = 5)
+
+# rows by col matrix multiplication
+matmul <- x %*% y
+
+matmul
+```
+
+### Lists
+Lists are probably the most programmatically complex objects in R, they contain different types and have different lenght with or without named elements.
+They represent the very first interface to **Object-oriented programming**.
+
+## Object-Oriented (OO) data type
+### Classes in general
+Here we are moving from basic structures to objects which can contain data and are associated to methods which are able to operate on the data itself.
+It is a mode of operation borrowed from C++.
+A **class** contains *methods* and *attributes*, the whole creates one of the main instances of OOP.
+Class elements can inherit from other objects which share the same parent.
+The main thing to understand is that R, by default, treats everything as an object.
+Everything, literally *everything*, has attributes and maybe even methods, from basic vectors to complex classes.
+
+```{r}
+vec <- c(1,2,3)
+
+# Illustrate classes
+class(vec)
+
+# Coerce vector to another class as well, so that methods designed with that class im mind, can be applied to this object as well
+class(vec) <- append(class(vec), 'SPC')
+
+# Now vec will have both classes listed
+class(vec)
+```
+
+The way we can think of classes in R is that they are description of things in a specific methods system and are defined by the `setClass()` function in the `methods` package (in S4).
+An object is an instance of a class, these can be created using the `new()` function.
+Finally a method is a function operating *only* on a certain class of objects, in this sense a `generic` function is one which *dispatches methods*, this means that they do not perform any computation, they just figure out the class of the data and matches it with an appropriate method.
+Generics can of course be created and a developer might create associated methods.
+For S3 system objects there is also a `methods` function which lets the user explore methods implemented for the function.
+
+### Class systems
+By default, R has three object oriented systems, one is **S3**, it implements classes without defining them strictly but instead defines functions and methods separately across classes.
+The main functional aspect related to S3 is the ability to *overload functions*, this means that one function can be swiftly applied to different class elements and behave correctly.
+S3 functions are by design split into `generics` and `methods` and are defined in the code by using `generic.class`.
+
+```{r}
+# Example of an S3 defined (generic) function is print
+print
+
+# Call methods function on a generic function, in this case mean
+methods('mean')
+```
+
+S3 pre-dates S4 both in terms of time and functionality, S3 methods system is less rigorous and informal, this called for a more formalized approach tackled by S4.
+
+We can explicitly access the code behind an S3 method definition by doing the following:
+
+```{r}
+head(getS3method('mean', 'default'))
+tail(getS3method('mean', 'default'))
+```
+
+This shows the inner functionality of the S3 method behind `mean`.
+Interestingly, the `.Internal` at the very end is used to fetch C code which adds functionality to the method.
+
+**S4** formally defines classes, while **RC** (reference class) binds also the methods and has a very similar approach to classes in C++.
+In the below code we can see how, differently from S3, an S4 method does not have ellipses in the `standardGeneric` function since it takes on standardized input invariably.
+
+```{r}
+# Print out an S4 function
+show
+```
+
+Classes in R can be defined using the `structure()` function by doing something like `foo <- structure(list(), class = 'my_class')` and then from there we can start building methods for the class by specifying functions operating on the structure.
+A hierarchy of sorts can be visualized as follows, first we have a class, then in **S3** methods are below functions, which in turn are separated from the class specification (like class and attributes in python).
+**RC** style objects are the ones closer to the object-oriented programming way of C++, here methods and attributes are packaged within the class.
+
+### Creating an S4 Class
+Now, as an example, we will define a simple S4 class for describing a bank account.
+
+```{r}
+# Define the S4 class with slots
+setClass('bank_account',
+         representation('user' = 'character',
+                        'balance' = 'numeric'))
+```
+
+In this way, we are able to access the slots of the class with the `@` operator, which is specifically reserved to access S4 class slots.
+Let's now create a new method which allows the updating of the class object after a money deposit.
+
+```{r}
+# A method to update a class 
+setGeneric('sum')
+
+setMethod('sum', # specify a generic function 
+          'bank_account', # signature
+          function(x, deposit) {
+            x@balance <- x@balance + deposit
+          })
+
+# If we call methods on print we should see the new method as well
+showMethods('sum')
+```
+
+Now let's try the new class in action and apply the defined method to an object!
+
+```{r}
+# Create a new bank account with user and balance
+ba <- new('bank_account', user = 'Mattia', balance = 100)
+
+# Add a deposit (if this was a Ref Class then updates could happen inplace)
+ba@balance <- sum(ba, 200)
+
+# Print out new value
+ba@balance
+```
+
+### Working with filesystems
+In R, we are able to work with files by interacting with the host OS and filesystem in I/O workflows and pipelines.
+The function `read.table()` is a built-in which helps the user to read files.
+In addition, by using `write.table()` we can save a table object with a specified name and separator.
+R also provides a specific function to `dump()` a whole environment image into a variable which can be save, although this is highly inefficient.
+
+Additionally the `tidyverse`, through `readr`, provides a faster interface to achieve the same I/O management.
+
+An interesting binary file format to save objects in R but which can be read by any other programming languages is the one provided by the `feather` library.
+
+## Working with Data
+### Vectorized functions
+Base R functions for manipulating basic data structures are many.
+One of the most potent family of functions in R is the `*apply` one.
+In this case we can iterate over elements of a list or columns of a dataframe iteratively by applying a custom function without the need to declare it explicitly outside.
+
+```{r}
+# Use apply over a list
+l = list(   1:5
+          , c("a","b")
+          , c(T,F,T,T) )
+
+# apply length to the list elements
+lapply(l, length)
+```
+
+Then we can operate over dataframe numerical columns extracting correlation values like the following, using the function `pairs()`.
+
+```{r}
+## quick graphical overview by the scatterplot matrix
+d <- data.frame('id'=runif(100), 'score'=runif(100), 'value'=runif(100))
+
+pairs(d[,c("id", "score","value")]
+      , lower.panel = panel.smooth
+      , upper.panel = NULL)
+```
+
+### Operations on Matrices
+Operations on numerical 2D data like matrices can be operated upon by using a couple of very powerful functions like `scale()` and `sweep()`.
+
+```{r}
+# Showcase the functions above
+m = matrix(round(runif(9),2),nr=3,nc=3) 
+
+# Scale (mean 0 and variance 1)
+scale(m, center = TRUE, scale = TRUE)
+
+# Sweep (apply a vector over a matrix summarizing an operation)
+# median value of each row of the matix
+row.med <- apply(m, MARGIN = 1, FUN = median)
+# subtracting the median value of each row
+sweep(m, MARGIN = 1, STATS = row.med, FUN = "-")
+```
+## The Tidyverse 
+Of course the functionality of many of these functions has been superseded and augmented by the ones provided by the `dplyr` package, at least in terms of operating over dataframes.
+
+## Code optimization and performance testing in R
+### Variable scoping
+Functions in R map a repetitive behaviour onto an input and generate a return value.
+In R, `.Primitive` is used to call a function from the underlying C language.
+In functions, scoping refers to how a value is assigned to an environment variable, this will test whether the variable already exists or not and whether the variable exists in a parent or child environment.
+*Scoping* is divided in both _static_ and _dynamic_.
+In static scoping we can have four basic principles including name masking, by which if a name is not defined inside a function, R will look for it in the parent environment.
+Another feature is dynamic lookup, by which we can have multiple assignments to the same value along the code.
+
+```{r}
+x <- 1
+y <- 3
+
+# Demonstrate name masking
+fun <- function(){
+  x * y  
+}
+
+fun()
+
+# Demonstrate dynamic look-up
+dl <- function(){
+  x <- x + 1
+}
+
+# first value
+x <- 0
+dl()
+
+# second value
+x <- 2
+dl()
+```
+
+### Exception handling
+In the case we end up calling a variable inside a function which does not exists, R will throw an error since it cannot find the variable anywhere in the function or in the parent environment.
+We can check the existance of variables by using `exist()`.
+While defining a function we can check the existance of specific argument using the `missing()` function inside a function in a conditional which also includes the stopping of the function in case of positive status with `stop()`.
+This concept extends to *condition handling and recovery* with the `try()` and `catch()` couple of commands.
+Additionally, by using `tryCatch()` we can extend this behaviour further by encapsulating both command, warning and error in the same function which will decide between warning or error.
+
+```{r}
+# tryCatch demonstration
+```
+
+In R, there are a few functions which help with debugging functions, we can set a `debug()` function working in order to check the status of a function.
+Additionally one can use `browse()` and `traceback()` to check whether the function is doing the correct thing.
+
+### Profiling with `rbenchmark`
+Also, one can check for function performance and benchmarking with specific libraries in R like `rbenchmark::benchmark()`.
+Calling this function, we can manage the avergae execution time and get data from the execution of more than one function altogether.
+
+Optimizing code to make it faster is an iterative process which essentially entails three steps including *finding the bottleneck*, trying to *eliminate it* or substitute it and then *repeat the process* until the code is "fast enough".
+These steps are facilitated by profiling the code, some demonstration is present below.
+
+```{r}
+# Code profiling
+```
+
+The main thing is to understand how R handles every calculation, this procedure is known as **profiling** can be achieved in R by different means and packages.
+We can demonstrate this by applying this workflow to a linear regression setting.
+
+```{r}
+# Linear regression code profiling
+```
+
+## The packaging system in R
+### Libraries in r
+Packages in R are installed by using either *CRAN* or other public package repositories like *Bioconductor* as we have seen yesterday.
+R uses both a system-wide access library (admin privileges needed) and a personal library living in the home directory of the user (usually located at `/usr/local/bin/R`).
+The tendency is to use only source code within libraries without relaying on third-party code in order to keep everything contained and requiring only compilation of its own source code.
+RStudio is an _IDE_ completely based and dependant on R which allows developers to start a fresh project from a template directory system. In this case we can set a project name and already select eventually present source files from which to start building. Additionally, all code can be promptly synced with an existing or a new git repository to provide efficient tracking of code changes. The same can be achieved in CLI by running `package.skeleton()`. Some source of help useful to understand how to build R packages include the [official R documentation](https://cran.r-project.org/doc/manuals/R-exts.html) and [Karl Brockman's Primer](https://kbroman.org/pkg_primer/) (also contains many other interesting tutorials and primers for C++). 
+
+### Generating function docs
+In order to automate building effective documentation (which resided in a `.Rd` file for each function contained in the `man` directory) and function annotation, which can become a really painful process, we can rely on the [`Roxygen2`](https://roxygen2.r-lib.org/) which takes specific annotations in the source code and turns them into function documents respecting the format needed by R. An example of a function with proper `Roxygen2` annotations is the following:
+
+```{r}
+# Illustration of Roxygen2 docs
+
+#' A simple and useless function
+#' 
+#' This function is just here to print stuff out and demonstrate the use of \code{roxygen}. 
+#' Use "@param" to list the paramters of the function with descriptions. 
+#' Use "@return" to describe the return values of the function. 
+#' Use "@export" to export the function in namespace or do not use it if the function is supposed to remain of internal use. 
+#' 
+#' @param x whatever you want to print out.
+#' 
+#' @return None
+#' 
+#' @export
+
+my_fun <- function(x, ...){
+  print(x, ...)
+}
+```
+Another important part of R packages is the `NAMESPACE`, which contains instructions on how to export functions when loading a package. This file will also be generated by `Roxygen2` when needed, and the tool will automatically export only the right and needed namespaces (function names). 
+
+### Adding data to packages
+Another useful feature that a developer can use while creating a package is the insertion of data as well. This data can be used for testing or use as available datasets for showcasing the package functionalities. This can also be really useful in the case of static files which are sourced from functions within the package.
+This documenting of data can also be handled by `Roxygen2` through the creation of another `.Rd` file. In the data definition we can provide a `@docType data` and a `@usage data` to refer to the fact that is data and the way to source it using a function. 
+
+```{r}
+# Here's a way to generate some data and store it into a file so that it can be source by a function in the package
+# This code should be saved as any other source code, and with the annotations it will generate automatically a .Rd file with documentation
+
+#' Random data loaded inside a package
+#' 
+#' @docType data
+#' 
+#' @usage data(random_matrix)
+
+random_matrix <- matrix(runif(100), ncol=10)
+```
+
+The above matrix will then be loaded and included in the worskpace after the package has been loaded and can be called using `random_matrix` as a variable, the same way that `mt_cars` is sourced from ggplot's default datasets.

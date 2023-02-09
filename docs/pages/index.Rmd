@@ -1,0 +1,25 @@
+---
+author: "Mattia Toninelli"
+date: "06/02/23"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    toc_collapsed: true
+    toc_depth: 3
+    number_sections: true
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', warning = FALSE, message = FALSE)
+```
+
+# Introduction
+The course will give an overview of R as an instrument for programming and efficient scripting, with a twist on using it to analyze biologically relevant data.
+It will start with the basics and then develop into an exploration of ways to improve code performance and structure.
+All of the materials from the lectures can be found [here](https://www.ceredalab.com/SPC/index.html), with relevant information related to the authors as well.
+
+The course, which lasted one week, has been thaught by U. Pozzoli, F. Iannelli and M. Cereda at [IEO](https://www.research.ieo.it/) in Milan.

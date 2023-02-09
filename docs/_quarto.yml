@@ -6,8 +6,23 @@ website:
   title: "R Programming Course"
   navbar:
     left:
-      - href: index.Rmd
+      - href: ./pages/index.Rmd
         text: Home
+      - href: ./pages/prog_base.Rmd
+        text: Basics
+      - href: ./pages/r_paradigms.Rmd
+        text: R  
+      - href: ./pages/r_genomics.Rmd
+        text: Genomics
+    page-footer: 
+      background: light
+      left:
+        - "Copyright 2023, Mattia Toninelli"
+    right: 
+      - icon: github
+        href: https://github.com/mtoninel
+      - icon: twitter
+        href: https://twitter.com/toninells
 
 format:
   html:

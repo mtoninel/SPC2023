@@ -1,0 +1,20 @@
+project:
+  type: website
+
+# For top navigation, organize day-by-day tabs
+website:
+  title: "R Programming Course"
+  navbar:
+    left:
+      - href: index.Rmd
+        text: Home
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true
+    toc_float: true
+    toc_collapsed: true

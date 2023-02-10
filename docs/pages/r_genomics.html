@@ -98,12 +98,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -125,7 +123,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -173,9 +171,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
@@ -190,16 +185,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#r-for-biological-data" id="toc-r-for-biological-data" class="nav-link active" data-scroll-target="#r-for-biological-data">R for biological data</a>
+  <li><a href="#r-for-biological-data" id="toc-r-for-biological-data" class="nav-link active" data-scroll-target="#r-for-biological-data">R for Biological Data</a>
   <ul class="collapse">
   <li><a href="#bioconductor-for-biological-data-in-r" id="toc-bioconductor-for-biological-data-in-r" class="nav-link" data-scroll-target="#bioconductor-for-biological-data-in-r">Bioconductor for biological data in R</a></li>
+  <li><a href="#genome-arithmetics" id="toc-genome-arithmetics" class="nav-link" data-scroll-target="#genome-arithmetics">Genome arithmetics</a></li>
+  <li><a href="#dnastring-and-dnastringset" id="toc-dnastring-and-dnastringset" class="nav-link" data-scroll-target="#dnastring-and-dnastringset">DNAString and DNAStringSet</a></li>
   </ul></li>
   <li><a href="#genomics-data-visualization" id="toc-genomics-data-visualization" class="nav-link" data-scroll-target="#genomics-data-visualization">Genomics data visualization</a>
   <ul class="collapse">
   <li><a href="#plotting-basics-in-r" id="toc-plotting-basics-in-r" class="nav-link" data-scroll-target="#plotting-basics-in-r">Plotting basics in R</a></li>
   <li><a href="#plotting-heatmaps" id="toc-plotting-heatmaps" class="nav-link" data-scroll-target="#plotting-heatmaps">Plotting heatmaps</a></li>
   <li><a href="#upset-plots" id="toc-upset-plots" class="nav-link" data-scroll-target="#upset-plots">UpSet plots</a></li>
-  <li><a href="#oncoprint" id="toc-oncoprint" class="nav-link" data-scroll-target="#oncoprint">Oncoprint</a></li>
+  <li><a href="#oncoprint" id="toc-oncoprint" class="nav-link" data-scroll-target="#oncoprint">oncoPrint</a></li>
   <li><a href="#cbioportal-for-cancer-genomics" id="toc-cbioportal-for-cancer-genomics" class="nav-link" data-scroll-target="#cbioportal-for-cancer-genomics">cBioPortal for Cancer Genomics</a></li>
   <li><a href="#genome-level-heatmaps" id="toc-genome-level-heatmaps" class="nav-link" data-scroll-target="#genome-level-heatmaps">Genome-level Heatmaps</a></li>
   </ul></li>
@@ -212,12 +209,107 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 <section id="r-for-biological-data" class="level2">
-<h2 class="anchored" data-anchor-id="r-for-biological-data">R for biological data</h2>
+<h2 class="anchored" data-anchor-id="r-for-biological-data">R for Biological Data</h2>
 <section id="bioconductor-for-biological-data-in-r" class="level3">
 <h3 class="anchored" data-anchor-id="bioconductor-for-biological-data-in-r">Bioconductor for biological data in R</h3>
-<p>Bioconductor was initially created with the idea in mind to generate an <em>open-source</em> place based on the R programming language on which to store packages and projects for the analysis of genomics data. Given the nature of Bioconductor, it encourages contributions and learning through massive documentation bundled with every package. Bioconductor packages are focused on deploying many different functionalities spanning from data visualization for genomics to differential expression analysis, all of this coupled with the added learning bonuses coming from the release of <em>vignettes</em>. Some of the most used packages in Bioconductor used for <em>genome arithmetics</em> include <code>IRanges</code> and <code>GenomicRanges</code>. Since the genome is a linear one-dimensional coordinate system, we can perform different kinds of operations related for instance to overlaps. For example in the former package, we can define a set of three ranges by using the following code:</p>
+<p><a href="https://bioconductor.org/">Bioconductor</a> was initially created with the idea in mind to generate an <em>open-source</em> place based on the R programming language on which to store packages and projects for the analysis of genomics data. Given the nature of Bioconductor, it encourages contributions and learning through massive documentation bundled with every package. Bioconductor packages are focused on deploying many different functionalities spanning from data visualization for genomics to differential expression analysis, all of this coupled with the added learning bonuses coming from the release of <em>vignettes</em> (accessible with the function <code>vignette()</code>).</p>
+</section>
+<section id="genome-arithmetics" class="level3">
+<h3 class="anchored" data-anchor-id="genome-arithmetics">Genome arithmetics</h3>
+<p>Some of the most used packages in Bioconductor used for <em>genome arithmetics</em> include <code>IRanges</code> and <code>GenomicRanges</code>. Since the genome is a linear one-dimensional coordinate system, we can perform different kinds of operations related for instance to overlaps or differences. For example in the former package, we can define a set of three ranges by using the following code:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"IRanges"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define IRanges object</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>myiranges <span class="ot">&lt;-</span> <span class="fu">IRanges</span>(<span class="at">start=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">20</span>,<span class="dv">25</span>), <span class="at">end=</span><span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">30</span>,<span class="dv">40</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Accessor functions</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">start</span>(myiranges) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5 20 25</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ends</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">end</span>(myiranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10 30 40</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Lengths (note how we use 0-indexed bases)</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">width</span>(myiranges)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  6 11 16</code></pre>
+</div>
+</div>
+<p>Checking the class of these objects we would see that they are <em>S4</em>, like all Bioconductor objects. This means that the operations performed above are already stored in slots of the object accessible with the <code>@</code> operator.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>myiranges<span class="sc">@</span>start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5 20 25</code></pre>
+</div>
+</div>
+<p><code>IRanges</code> objects can also be represented visually with the following code function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define function to draw IRanges</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>illustrate_iranges <span class="ot">&lt;-</span> <span class="cf">function</span>(obj) {</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(obj))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">cat</span>(<span class="fu">rep</span>(<span class="st">" "</span>, <span class="fu">start</span>(obj)[i]),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">rep</span>(<span class="st">"="</span>, <span class="fu">width</span>(obj)[i]),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep=</span><span class="st">""</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">illustrate_iranges</span>( myiranges )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     ======
+                    ===========
+                         ================</code></pre>
+</div>
+</div>
+<p>An advancement based on the <code>IRanges</code> package is provided by the <code>GRanges</code> one, which provides basically the same interface with more integration with other Bioconductor packages.</p>
 <p>Most of the provided operations above are recalling ones already existant in C-based packages like <a href="https://bedtools.readthedocs.io/en/latest/">bedtools</a>.</p>
-<p>Another way of visualizing genomics elements is through strings, after all DNA sequences are just sets of letters. A useful suite of commands is the one provided by the package <code>Biostrings</code>. This provides a multitude of functions that provide the ability to generate for instance <em>reverse complements</em> of the original sequence. This for instance is useful since in FASTA format files, the genes are always present with their forward strand and therefore we might need the reverse complement if the gene is antisense. This capability is achieved with the <code>DNAString</code> class and its associated methods.</p>
+</section>
+<section id="dnastring-and-dnastringset" class="level3">
+<h3 class="anchored" data-anchor-id="dnastring-and-dnastringset">DNAString and DNAStringSet</h3>
+<p>Another way of visualizing genomics elements is through strings, after all DNA sequences are just sets of letters. A useful suite of commands is the one provided by the package <code>Biostrings</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Biostrings)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a sequence</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>myseq <span class="ot">&lt;-</span> <span class="fu">DNAString</span>(<span class="st">"atggaaaccgcgctgctgatttgcgcgtaa"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>myseq</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>30-letter DNAString object
+seq: ATGGAAACCGCGCTGCTGATTTGCGCGTAA</code></pre>
+</div>
+</div>
+<p>This provides a multitude of functions that provide the ability to generate for instance <em>reverse complements</em> of the original sequence.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine reverse complement</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">reverseComplement</span>(myseq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>30-letter DNAString object
+seq: TTACGCGCAAATCAGCAGCGCGGTTTCCAT</code></pre>
+</div>
+</div>
+<p>This for instance is useful since in FASTA format files, the genes are always present with their forward strand and therefore we might need the reverse complement if the gene is antisense. This capability is achieved with the <code>DNAString</code> class and its associated methods. We can, for instance, translate a DNA sequence as well.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">translate</span>(myseq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>10-letter AAString object
+seq: METALLICA*</code></pre>
+</div>
+</div>
+<p>We are also able to exploit functions to check for the existance of patterns within our sequences.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Match basic pattern</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">matchPattern</span>(<span class="st">"ATG"</span>, myseq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Views on a 30-letter DNAString subject
+subject: ATGGAAACCGCGCTGCTGATTTGCGCGTAA
+views:
+      start end width
+  [1]     1   3     3 [ATG]</code></pre>
+</div>
+</div>
+<p>The fuctionality provided by the <code>DNAString</code> package is expanded and vectorized across multiple sequences thanks to the <code>DNAStringSet</code> which allows us to collect and operate over multiple DNA sequences at once.</p>
 <p>Bioconductor already contains many packages which gather genetic information for many model organisms, one of them is <code>BSgenome</code> while others live within the <code>.org</code> family of packages.</p>
 </section>
 </section>
@@ -225,28 +317,71 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="genomics-data-visualization">Genomics data visualization</h2>
 <section id="plotting-basics-in-r" class="level3">
 <h3 class="anchored" data-anchor-id="plotting-basics-in-r">Plotting basics in R</h3>
-<p>One of the main uses for data visualization is to perform <em>exploratory data analysis</em> (EDA). The basic library in R for creating customisable and clear visualization is <code>ggplot</code>. This package is inserted within a rich environment of data manipulation tools and visualization called <code>tidyverse</code>. The fundamental idea related to data visualization is to <strong>communicate a story</strong> using the data at our disposal. Relationships hidden in data stand out with proper visualization techniques and ideas. That’s the thing, it’s not only about dull application but also about creativity and storytelling. This phenomenon is especially relevant while working with huge datasets where relationships can exist in many directions and between many variables at once, and where each variable might be represented by thousands or millions of observations. This is exactly the case for genomic data sets describing relevant biological information.</p>
+<p>One of the main uses for data visualization is to perform <em>exploratory data analysis</em> (EDA). The basic library in R for creating customisable and clear visualization is <code>ggplot</code>. This package is inserted within a rich environment of data manipulation tools and visualization called <code>tidyverse</code>. The fundamental idea related to data visualization is to <strong>communicate a story</strong> using the data at our disposal. Relationships hidden in data stand out with proper visualization techniques and ideas. That’s the thing, it’s not only about dull application but also about creativity and storytelling. This phenomenon is especially relevant while working with huge datasets where relationships can exist in many directions and between many variables at once, and where each variable might be represented by thousands or millions of observations. This is exactly the case for genomic data sets describing relevant biological information. Other times, like below, the plotting functionality of R can be adapted to create <em>generative art</em>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generative art with R example with folded code?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>In its basic functionality, <code>ggplot</code> exploits what is known as “the grammar of graphics”, <code>gg</code>. This consists of a <em>layered</em> mechanism of instructions. We start by defining which variables of interest are to map to which plot characteristic between <em>color</em>, <em>fill</em>, <em>shape</em> and <em>size</em>. This happens by using the <code>aes()</code> function within either a direct <code>ggplot</code> call or within <code>geoms</code>. <code>geoms</code> are used to define what kind of plot to use, and this of course is going to depend on which variable relationships we want to highlight. One of the paradigms of plotting data is the variable-chart type relationship. By this we mean the right coupling between chart type and appropriate variable nature to plot (i.e.&nbsp;<em>continous</em> vs <em>discrete</em>).</p>
-<p>These are the main relationships to take into account when plotting: + One variabel, continous: histogram, density curve (<em>distributions</em>) + One variable, discrete: bar chart, pie chart (<em>proportions</em>) + Two variables, continuous: scatter plot, 2D density kernels (<em>distributions</em>) + Two variables, discrete: confusion matrices, heatmaps (<em>common occurence</em>) + Two variables, one continuous and one categorical: box plot, violin plot (<em>distributions</em>)</p>
-<p>This, in practice, for a minimal plot between two continuous variables:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> mtcars</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the relationship between a car displacement and mpg, colored by number of cylinders and give a dot size related to the car's weight</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># From this it appears clear how heavier cars have bigger engines, consume more and have more cylinders.</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> disp, <span class="at">y =</span> mpg, <span class="at">col =</span> <span class="fu">as.factor</span>(cyl))) <span class="sc">+</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> wt), <span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generative art with R example with folded code?</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jasmines)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># randomize</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="fu">use_seed</span>(<span class="fu">runif</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scene_discs</span>(</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">rings =</span> <span class="dv">3</span>, <span class="at">points =</span> <span class="dv">5000</span>, <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ind =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unfold_warp</span>(</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">iterations =</span> <span class="dv">1</span>,</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> .<span class="dv">5</span>, </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">output =</span> <span class="st">"layer"</span> </span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unfold_tempest</span>(</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">iterations =</span> <span class="dv">20</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">scale =</span> .<span class="dv">01</span></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">style_ribbon</span>(</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="fu">palette_named</span>(<span class="st">"vik"</span>),</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"ind"</span>,</span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fu">c</span>(.<span class="dv">1</span>,.<span class="dv">1</span>),</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">background =</span> <span class="st">"white"</span></span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="r_genomics_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In its basic functionality, <code>ggplot</code> exploits what is known as “the grammar of graphics”, <code>gg</code>. This consists of a <em>layered</em> mechanism of instructions. We start by defining which variables of interest are to map to which plot characteristic between <em>color</em>, <em>fill</em>, <em>shape</em> and <em>size</em>. This happens by using the <code>aes()</code> function within either a direct <code>ggplot</code> call or within <code>geoms</code>. <code>geoms</code> are used to define what kind of plot to use, and this of course is going to depend on which variable relationships we want to highlight. One of the paradigms of plotting data is the variable-chart type relationship. By this we mean the right coupling between chart type and appropriate variable nature to plot (i.e.&nbsp;<em>continous</em> vs <em>discrete</em>).</p>
+<p>These are the <strong>main relationships</strong> to take into account when plotting:</p>
+<ul>
+<li><p>One variable, continous: histogram, density curve (<em>distributions</em>)</p></li>
+<li><p>One variable, discrete: bar chart, pie chart (<em>proportions</em>) Two variables, continuous: scatter plot, 2D density kernels (<em>distributions</em>)</p></li>
+<li><p>Two variables, discrete: confusion matrices, heatmaps (<em>common occurence</em>)</p></li>
+<li><p>Two variables, one continuous and one categorical: box plot, violin plot (<em>distributions</em>)</p></li>
+</ul>
+<p>This, in practice, for a minimal plot between two continuous variables:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> mtcars</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the relationship between a car displacement and mpg, colored by number of cylinders and give a dot size related to the car's weight</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># From this it appears clear how heavier cars have bigger engines, consume more and have more cylinders.</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> disp, <span class="at">y =</span> mpg, <span class="at">col =</span> <span class="fu">as.factor</span>(cyl))) <span class="sc">+</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">color=</span><span class="st">'black'</span>) <span class="sc">+</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> wt), <span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">'Paired'</span>) <span class="sc">+</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggtitle</span>(<span class="st">'Miles per gallon and Engine Displacement'</span>) <span class="sc">+</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -256,17 +391,191 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="plotting-heatmaps" class="level3">
 <h3 class="anchored" data-anchor-id="plotting-heatmaps">Plotting heatmaps</h3>
 <p>Heatmaps are visual representations of tabular data. One of the most used packages to create heatmaps is <code>pheatmap</code> and its more personalizable counterpart <a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/"><code>complexHeatmap</code></a>.</p>
+<p>This package allows the user to define heatmap elements as separate classes within a list.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ComplexHeatmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ComplexHeatmap)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(circlize)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fetch data</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>expr <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">paste0</span>(<span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"ComplexHeatmap"</span>), <span class="st">"/extdata/gene_expression.rds"</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> expr[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Turn into matrix</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(mat)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw a matrix with annotations as well</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>value <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">10</span>)</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Annotation dataframe</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"a"</span>, <span class="dv">5</span>),</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>                         <span class="fu">rep</span>(<span class="st">"b"</span>, <span class="dv">5</span>)),</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>                <span class="at">plate =</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>, <span class="dv">10</span>))</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Points</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>ha <span class="ot">=</span> <span class="fu">HeatmapAnnotation</span>(<span class="at">df =</span> df,</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>                       <span class="at">points =</span> <span class="fu">anno_points</span>(value),</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>                       <span class="at">col =</span> <span class="fu">list</span>( <span class="at">type =</span> <span class="fu">c</span>(<span class="st">"a"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"b"</span> <span class="ot">=</span> <span class="st">"blue"</span>), <span class="at">plate =</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>), <span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"black"</span>))</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>                       ))</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot</span></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>ha_boxplot <span class="ot">=</span> <span class="fu">HeatmapAnnotation</span>(<span class="at">boxplot =</span> <span class="fu">anno_boxplot</span>(mat, <span class="at">axis =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a><span class="fu">Heatmap</span>(mat,</span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">name =</span> <span class="st">"expr"</span>,</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">top_annotation =</span> ha,</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">bottom_annotation =</span> ha_boxplot</span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a>         )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also check out a more complex heatmap related to measles vaccinations, which also tells a very compelling story.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"measles.rds"</span>, <span class="at">package =</span> <span class="st">"ComplexHeatmap"</span>))</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>ha1 <span class="ot">=</span> <span class="fu">HeatmapAnnotation</span>(</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">dist1 =</span> <span class="fu">anno_barplot</span>(</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">colSums</span>(mat), </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">bar_width =</span> <span class="dv">1</span>, </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">col =</span> <span class="st">"white"</span>, <span class="at">fill =</span> <span class="st">"#FFE200"</span>), </span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis_param =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">2e5</span>, <span class="fl">4e5</span>, <span class="fl">6e5</span>, <span class="fl">8e5</span>),</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"200k"</span>, <span class="st">"400k"</span>, <span class="st">"600k"</span>, <span class="st">"800k"</span>)),</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"cm"</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">show_annotation_name =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>ha2 <span class="ot">=</span> <span class="fu">rowAnnotation</span>(</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">dist2 =</span> <span class="fu">anno_barplot</span>(</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>        <span class="fu">rowSums</span>(mat), </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">bar_width =</span> <span class="dv">1</span>, </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">col =</span> <span class="st">"white"</span>, <span class="at">fill =</span> <span class="st">"#FFE200"</span>), </span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">border =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis_param =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">5e5</span>, <span class="fl">1e6</span>, <span class="fl">1.5e6</span>),</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"500k"</span>, <span class="st">"1m"</span>, <span class="st">"1.5m"</span>)),</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"cm"</span>)</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    ), <span class="at">show_annotation_name =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>year_text <span class="ot">=</span> <span class="fu">as.numeric</span>(<span class="fu">colnames</span>(mat))</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>year_text[year_text <span class="sc">%%</span> <span class="dv">10</span> <span class="sc">!=</span> <span class="dv">0</span>] <span class="ot">=</span> <span class="st">""</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>ha_column <span class="ot">=</span> <span class="fu">HeatmapAnnotation</span>(</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="fu">anno_text</span>(year_text, <span class="at">rot =</span> <span class="dv">0</span>, <span class="at">location =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">"npc"</span>), <span class="at">just =</span> <span class="st">"top"</span>)</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>col_fun <span class="ot">=</span> <span class="fu">colorRamp2</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">800</span>, <span class="dv">1000</span>, <span class="dv">127000</span>), <span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"cornflowerblue"</span>, <span class="st">"yellow"</span>, <span class="st">"red"</span>))</span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>ht_list <span class="ot">=</span> <span class="fu">Heatmap</span>(mat, <span class="at">name =</span> <span class="st">"cases"</span>, <span class="at">col =</span> col_fun,</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">cluster_columns =</span> <span class="cn">FALSE</span>, <span class="at">show_row_dend =</span> <span class="cn">FALSE</span>, <span class="at">rect_gp =</span> <span class="fu">gpar</span>(<span class="at">col=</span> <span class="st">"white"</span>), </span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">show_column_names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>    <span class="at">row_names_side =</span> <span class="st">"left"</span>, <span class="at">row_names_gp =</span> <span class="fu">gpar</span>(<span class="at">fontsize =</span> <span class="dv">8</span>),</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">column_title =</span> <span class="st">'Measles cases in US states 1930-2001</span><span class="sc">\n</span><span class="st">Vaccine introduced 1961'</span>,</span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">top_annotation =</span> ha1, <span class="at">bottom_annotation =</span> ha_column,</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">heatmap_legend_param =</span> <span class="fu">list</span>(<span class="at">at =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">5e4</span>, <span class="fl">1e5</span>, <span class="fl">1.5e5</span>), </span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>, <span class="st">"50k"</span>, <span class="st">"100k"</span>, <span class="st">"150k"</span>))) <span class="sc">+</span> ha2</span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a><span class="fu">draw</span>(ht_list, <span class="at">ht_gap =</span> <span class="fu">unit</span>(<span class="dv">3</span>, <span class="st">"mm"</span>))</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a><span class="fu">decorate_heatmap_body</span>(<span class="st">"cases"</span>, {</span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">=</span> <span class="fu">which</span>(<span class="fu">colnames</span>(mat) <span class="sc">==</span> <span class="st">"1961"</span>)</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> i<span class="sc">/</span><span class="fu">ncol</span>(mat)</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">grid.lines</span>(<span class="fu">c</span>(x, x), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>))</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">grid.text</span>(<span class="st">"Vaccine introduced"</span>, x, <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">"npc"</span>) <span class="sc">+</span> <span class="fu">unit</span>(<span class="dv">5</span>, <span class="st">"mm"</span>))</span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="upset-plots" class="level3">
 <h3 class="anchored" data-anchor-id="upset-plots">UpSet plots</h3>
-<p>Set operations can be depicted with the use of Venn diagrams, but what it we need more complex operations spanning more than four sets? (the Venn of which can already be quite confusing) In this use case we can check out the package <code>UpSetR</code> which will produce plots line the one below. In this case we can see how it is useful in exploring multiple set relationships all at once. UpSet plots can also be thought of as extensions of heatmaps, by coloring sets by intersection size and annotations.</p>
+<p>Set operations, particularly useful when dealing with interval genomic data, can be depicted with the use of Venn diagrams, but what it we need more complex operations spanning more than four sets? (the Venn of which can already be quite confusing)</p>
+<p>In this use case we can check out the package <code>UpSetR</code> which will produce plots line the one below. In this case we can see how it is useful in exploring multiple set relationships all at once. UpSet plots can also be thought of as extensions of heatmaps, by coloring sets by intersection size and annotations.</p>
 </section>
 <section id="oncoprint" class="level3">
-<h3 class="anchored" data-anchor-id="oncoprint">Oncoprint</h3>
-<p>OncoPrint became very famous in CNV studies in cancer, these plot are dedicated to checking out gene alterations as matrices where samples are columns and genes are rows.</p>
+<h3 class="anchored" data-anchor-id="oncoprint">oncoPrint</h3>
+<p><a href="https://jokergoo.github.io/ComplexHeatmap-reference/book/oncoprint.html"><code>oncoPrint()</code></a> is a function within the <code>ComplexHeatmap</code> package that became very famous in CNV studies in cancer, these plot are dedicated to checking out gene alterations as matrices where samples are columns and genes are rows.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Source from ComplexHeatmap package a heatmap with CNV modifications</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">=</span> <span class="fu">read.table</span>(<span class="fu">system.file</span>(<span class="st">"extdata"</span>, <span class="at">package =</span> <span class="st">"ComplexHeatmap"</span>, </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"tcga_lung_adenocarcinoma_provisional_ras_raf_mek_jnk_signalling.txt"</span>), </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>mat[<span class="fu">is.na</span>(mat)] <span class="ot">=</span> <span class="st">""</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(mat) <span class="ot">=</span> mat[, <span class="dv">1</span>]</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">=</span> mat[, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>mat<span class="ot">=</span>  mat[, <span class="sc">-</span><span class="fu">ncol</span>(mat)]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>mat <span class="ot">=</span> <span class="fu">t</span>(<span class="fu">as.matrix</span>(mat))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Define graphics</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"HOMDEL"</span> <span class="ot">=</span> <span class="st">"blue"</span>, <span class="st">"AMP"</span> <span class="ot">=</span> <span class="st">"red"</span>, <span class="st">"MUT"</span> <span class="ot">=</span> <span class="st">"#008000"</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>alter_fun <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">background =</span> <span class="cf">function</span>(x, y, w, h) {</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">grid.rect</span>(x, y, w<span class="sc">-</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>), h<span class="sc">-</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>), </span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> <span class="st">"#CCCCCC"</span>, <span class="at">col =</span> <span class="cn">NA</span>))</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># big blue</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">HOMDEL =</span> <span class="cf">function</span>(x, y, w, h) {</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">grid.rect</span>(x, y, w<span class="sc">-</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>), h<span class="sc">-</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>), </span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> col[<span class="st">"HOMDEL"</span>], <span class="at">col =</span> <span class="cn">NA</span>))</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># big red</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">AMP =</span> <span class="cf">function</span>(x, y, w, h) {</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">grid.rect</span>(x, y, w<span class="sc">-</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>), h<span class="sc">-</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>), </span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> col[<span class="st">"AMP"</span>], <span class="at">col =</span> <span class="cn">NA</span>))</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    },</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># small green</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">MUT =</span> <span class="cf">function</span>(x, y, w, h) {</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">grid.rect</span>(x, y, w<span class="sc">-</span><span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>), h<span class="sc">*</span><span class="fl">0.33</span>, </span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> col[<span class="st">"MUT"</span>], <span class="at">col =</span> <span class="cn">NA</span>))</span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplify rectangles with alter_graphics()</span></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Just for demonstration</span></span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>alter_fun <span class="ot">=</span> <span class="fu">list</span>(</span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">background =</span> <span class="fu">alter_graphic</span>(<span class="st">"rect"</span>, <span class="at">fill =</span> <span class="st">"#CCCCCC"</span>),   </span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">HOMDEL =</span> <span class="fu">alter_graphic</span>(<span class="st">"rect"</span>, <span class="at">fill =</span> col[<span class="st">"HOMDEL"</span>]),</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">AMP =</span> <span class="fu">alter_graphic</span>(<span class="st">"rect"</span>, <span class="at">fill =</span> col[<span class="st">"AMP"</span>]),</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">MUT =</span> <span class="fu">alter_graphic</span>(<span class="st">"rect"</span>, <span class="at">height =</span> <span class="fl">0.33</span>, <span class="at">fill =</span> col[<span class="st">"MUT"</span>])</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>column_title <span class="ot">=</span> <span class="st">"TCGA Lung Adenocarcinoma, genes in Ras Raf MEK JNK signalling"</span></span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>heatmap_legend_param <span class="ot">=</span> <span class="fu">list</span>(<span class="at">title =</span> <span class="st">"Alternations"</span>, <span class="at">at =</span> <span class="fu">c</span>(<span class="st">"HOMDEL"</span>, <span class="st">"AMP"</span>, <span class="st">"MUT"</span>), </span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Deep deletion"</span>, <span class="st">"Amplification"</span>, <span class="st">"Mutation"</span>))</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw oncoPrint</span></span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a><span class="fu">oncoPrint</span>(mat,</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">alter_fun =</span> alter_fun, <span class="at">col =</span> col, </span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">remove_empty_columns =</span> <span class="cn">TRUE</span>, <span class="at">remove_empty_rows =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">column_title =</span> column_title, <span class="at">heatmap_legend_param =</span> heatmap_legend_param)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="cbioportal-for-cancer-genomics" class="level3">
 <h3 class="anchored" data-anchor-id="cbioportal-for-cancer-genomics">cBioPortal for Cancer Genomics</h3>
@@ -276,7 +585,70 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="anchored" data-anchor-id="genome-level-heatmaps">Genome-level Heatmaps</h3>
 <p>Here we are producing genome-level heatmaps divided by chromosome and/or genes. These can be further decorated and transformed into visually pleasing plots by using additional libraries like <code>circlize</code>, which is the R implementation of <a href="http://circos.ca/">Circos plots</a>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(circlize)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(circlize)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">1000</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">factors =</span> <span class="fu">sample</span>(letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>], n, <span class="at">replace =</span> <span class="cn">TRUE</span>) <span class="co"># Categories</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  , <span class="at">x =</span> <span class="fu">rnorm</span>(n) <span class="co"># Vector</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>  , <span class="at">y =</span> <span class="fu">runif</span>(n) <span class="co"># Vector</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.par</span>(<span class="st">"track.height"</span> <span class="ot">=</span> <span class="fl">0.1</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.par</span>(<span class="st">"points.overflow.warning"</span> <span class="ot">=</span> <span class="cn">FALSE</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.initialize</span>(<span class="at">factors =</span> df<span class="sc">$</span>factors, <span class="at">x =</span> df<span class="sc">$</span>x)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a track</span></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.track</span>(</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>      <span class="at">factors =</span> df<span class="sc">$</span>factors</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    , <span class="at">y =</span> df<span class="sc">$</span>y,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">panel.fun =</span> <span class="cf">function</span>(x, y) {</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">circos.text</span>(CELL_META<span class="sc">$</span>xcenter,</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>                    CELL_META<span class="sc">$</span>cell.ylim[<span class="dv">2</span>] <span class="sc">+</span> <span class="fu">uy</span>(<span class="dv">5</span>, <span class="st">"mm"</span>), </span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>                    CELL_META<span class="sc">$</span>sector.index)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Adding Axes</span></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>        <span class="fu">circos.axis</span>(<span class="at">labels.cex =</span> <span class="fl">0.6</span>)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>col <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"#A6B1E1"</span>, <span class="st">"#424874"</span>), <span class="dv">4</span>)</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Adding points</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.trackPoints</span>(df<span class="sc">$</span>factors, df<span class="sc">$</span>x, df<span class="sc">$</span>y, <span class="at">col =</span> col, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.5</span>)</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a><span class="co"># add sector name outside</span></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.text</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="st">"text"</span>, <span class="at">sector.index =</span> <span class="st">"a"</span>, <span class="at">track.index =</span> <span class="dv">1</span>)</span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Add an histogram</span></span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>bgcol <span class="ot">=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"#A6B1E1"</span>, <span class="st">"#424874"</span>), <span class="dv">4</span>)</span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.trackHist</span>(df<span class="sc">$</span>factors, df<span class="sc">$</span>x, <span class="at">bin.size =</span> <span class="fl">0.2</span>, <span class="at">bg.col =</span> <span class="st">'white'</span>, <span class="at">col =</span> bgcol)</span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Add links</span></span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.link</span>(<span class="st">"a"</span>, <span class="dv">0</span>, <span class="st">"b"</span>, <span class="dv">0</span>, <span class="at">h =</span> <span class="fl">0.4</span>)</span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.link</span>(<span class="st">"c"</span>, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.5</span>), <span class="st">"d"</span>, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.5</span>,<span class="fl">0.5</span>), <span class="at">col =</span> <span class="st">"#D6E5E3"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">h =</span> <span class="fl">0.2</span>)</span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.link</span>(<span class="st">"e"</span>, <span class="dv">0</span>, <span class="st">"g"</span>, <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>), <span class="at">col =</span> <span class="st">"#CACFD6"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Then once drawn, we can clear the canvas.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear circos environment</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.clear</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
@@ -304,121 +676,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  let localAlternateSentinel = 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {

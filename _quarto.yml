@@ -28,9 +28,7 @@ website:
 # Themes, can be changed with .css files and .scss 
 format:
   html:
-    theme:
-      light: flatly
-      dark: darkly
+    theme: yeti
     css: styles.css
     toc: true
     toc_float: true

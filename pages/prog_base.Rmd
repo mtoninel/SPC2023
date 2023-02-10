@@ -6,13 +6,14 @@ output:
 editor_options: 
   markdown: 
     wrap: sentence
+code-block-border-left: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', warning = FALSE, message = FALSE)
 ```
 
-## A brief history of programming
+## A Programming Primer
 ### The Architecture
 The existence of programming languages is strongly related to how computers work and how they have been developed during their history.
 Architecture is the base on which languages are built.

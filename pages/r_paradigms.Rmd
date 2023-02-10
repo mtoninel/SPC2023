@@ -6,17 +6,55 @@ output:
 editor_options: 
   markdown: 
     wrap: sentence
+code-block-border-left: true
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.align = 'center', warning = FALSE, message = FALSE)
 ```
-## Data structures
+## Data Structures
 ### Vectors
 In R, we can have beginner data structures (i.e. vectors, matrices and dataframes) and more advanced structures (i.e. S3, S4 and RC).
 Simpler data structures can further be subset into *homogeneous* or *heterogeneous* data structures.
-**Atomic vectors** and **lists** differ due to the type of data they can contain, one is formed by elements of the same type, while lists are heterogeneous.
+Below we can find a representative diagram of data structure relationships in R.
+
+::: {align="center"}
+<img src='../pics/data-structures-overview.png' width=500 height=400 alt="Data structure relationship in R"/>
+:::
+
+**Atomic vectors** and **lists** are both mono-dimensional data types which differ due to the type of data they can contain, one is formed by elements of the same type, while lists are heterogeneous.
 Operations based on vectors in R are element-wise, meaning that vector-vector operations are done element by element (*with the shorter vector being recycled*) while scalar-vector operations broadcast the operation to each single element of a vector.
+In R, atomic vectors can be created using the _vector constructor_ `c()`.
+
+The important thing about vectors is the fact that they can be indexed to extract specific elements and can be concatenated together.
+
+```{r}
+# Vector concatenation and indexing
+vec_a <- c(0,1,2,3,4,5)
+vec_b <- c(28,3,45,2)
+vec_c <- c(0,1)
+
+# Concatenate
+fvec <- c(vec_a, vec_b, vec_c, 67, 9)
+
+# Index vector and extract 3rd element (remember that R is 1-based)
+fvec[3]
+```
+R is known for being a language with **vectorized** operations, this is crucial when implementing vector operations since taking advantage of this feature can dramatically speed up code. Some of these functionalities are shown below.
+
+```{r}
+# Vectorized addition with a scalar
+fvec + 3
+
+# Vector-vector addition
+fvec + c(rep(2,length(fvec)))
+
+# Vector-vector multiplication
+fvec * c(rep(2,length(fvec)))
+```
+
+### Structure and attributes
+Of course when adding together vectors we need to make sure that the elements of the addition are of the same length. But what about the underlying vector representation in R? We can access this information by using the utility function `str` and access an object's attributes.
 
 ```{r}
 # In R, we can function the structure function to check for the structure of the data 
@@ -30,6 +68,7 @@ str(v)
 'a_name' <- attr(v, 'my_attribute')
 ```
 
+### Approximations
 Another functionally important aspect is to remind ourselves of the existance of approximations in calculations, in this case if we type the following:
 
 ```{r}
@@ -43,6 +82,7 @@ This is partially rescued by the use of a function like the one `dplyr::near()`.
 Hand in hand with this concept is the one of *coercion*, by which object get converted from their original class to other classes.
 This in R happens either *implicitly* or *explicitly*.
 
+### Creating number sequences
 Creating sequences of numbers in R is fairly straightforward with many different functions available and we can generate both random sequences, repeated sequences or specific distributions (normal, poisson or others) by specifying the needed parameters.
 
 ```{r}
@@ -60,7 +100,7 @@ dbls <- rnbinom(100, size=1, prob=0.75)
 ```
 
 ### Matrices
-Two-dimensional data in R is represented by the `Matrix` class and can be constructed using the following code:
+Two-dimensional data in R is represented by the `Matrix` class and can be constructed using the following code.
 
 ```{r}
 # Create a matrix
@@ -73,7 +113,38 @@ dim(mat) <- c(3,20) # 3 rows 20 cols
 idxs <- upper.tri(mat, diag = FALSE)
 ```
 
-Expanding on operations, matrix multiplication in R is achieved with the operator `%*%` as such:
+Matrices can be also manipulated to get their diagonal and triangles by using dedicated functions.
+
+```{r}
+# Generate a matrix
+m <- matrix(runif(10), ncol = 5)
+
+# Diagonal 
+diag(m)
+
+# Upper triangle
+upper.tri(m, diag = TRUE)
+```
+
+Additionally, we can exploit functions which combine vectors to generate matrices.
+
+```{r}
+x <- c(0,2,4,5)
+y <- c(2,5,6,4)
+
+# bind vector into matrix as rows
+rbind(x, y)
+
+# bind as columnn
+cbind(x, y)
+```
+
+### Matrix operations
+In R, matrix-matrix operations are run _element-wise_, so they have to happen between uniform and consistent, meaning of the same dimensions. Expanding on operations, matrix multiplication in R is achieved with the operator `%*%` as such:
+
+::: {align="center"}
+<img src='../pics/matrix_multiplication.png' width=400 height=400/>
+:::
 
 ```{r}
 # Create matrices
@@ -88,7 +159,7 @@ matmul
 
 ### Lists
 Lists are probably the most programmatically complex objects in R, they contain different types and have different lenght with or without named elements.
-They represent the very first interface to **Object-oriented programming**.
+They represent the very first interface to **Object-oriented programming**. Lists are tricky to work with when mixing data types since they can include _silent coercion_.
 
 ## Object-Oriented (OO) data type
 ### Classes in general
@@ -254,11 +325,16 @@ Of course the functionality of many of these functions has been superseded and a
 ## Code optimization and performance testing in R
 ### Variable scoping
 Functions in R map a repetitive behaviour onto an input and generate a return value.
-In R, `.Primitive` is used to call a function from the underlying C language.
-In functions, scoping refers to how a value is assigned to an environment variable, this will test whether the variable already exists or not and whether the variable exists in a parent or child environment.
-*Scoping* is divided in both _static_ and _dynamic_.
-In static scoping we can have four basic principles including name masking, by which if a name is not defined inside a function, R will look for it in the parent environment.
-Another feature is dynamic lookup, by which we can have multiple assignments to the same value along the code.
+In R, `.Primitive` is used to call a function from the underlying C language, an example of this is `sum()`, as seen below.
+
+```{r}
+sum
+```
+
+In functions, **scoping** refers to how a value is assigned to an environment variable, this will test whether the variable already exists or not and whether the variable exists in a parent or child environment. More specifically, coping is the set of rules that control the way R picks up the value of a variable
+Scoping is divided in both _static_ and _dynamic_.
+In static scoping we can have four basic principles including _name masking_, by which if a name is not defined inside a function, R will look for it in the parent environment. _Functions and variables_ since the same rules apply if a function is defined within another function.
+Another feature is _dynamic lookup_, by which we can have multiple assignments to the same value along the code since static scoping determines _where_ to look for values and not when. This means that R looks for values when a function is run and not when it is created, which in turn means that **the output of a function can be different depending on objects outside its environment**.
 
 ```{r}
 x <- 1
@@ -287,17 +363,109 @@ dl()
 
 ### Exception handling
 In the case we end up calling a variable inside a function which does not exists, R will throw an error since it cannot find the variable anywhere in the function or in the parent environment.
-We can check the existance of variables by using `exist()`.
-While defining a function we can check the existance of specific argument using the `missing()` function inside a function in a conditional which also includes the stopping of the function in case of positive status with `stop()`.
+We can check the existance of variables by using `exist()` while the correct passing of an argument can be checked with the `missing()` function within an `if` statement. This can be coupled with a `stop()` function in order to stop code execution.
+
+```{r}
+# Missing check + Stop check
+foo = function(x,y,...){
+  if (missing(y)){
+    
+    # STOP
+    stop("y is not specified, please STOP\n")
+    
+    }else{
+     print(x)
+     print(y)
+     args = list(...)
+     if("z" %in% names(args)) print(args$z)
+  }
+}
+```
+
 This concept extends to *condition handling and recovery* with the `try()` and `catch()` couple of commands.
-Additionally, by using `tryCatch()` we can extend this behaviour further by encapsulating both command, warning and error in the same function which will decide between warning or error.
+Additionally, by using `tryCatch()` we can extend this behaviour further by encapsulating both command, warning and error in the same function which will decide between warning or error and eventually return custom error messages.
 
 ```{r}
 # tryCatch demonstration
+foo = function(z,
+               warning = function(w) {
+                 print( paste('warning:',w) );
+                 },
+                error = function(e) {
+                 print(paste('error:',e));
+               }
+               
+               ){
+        tryCatch(
+          { 
+          print(paste("attempt log operation for z:",z))
+          return(log(z))
+          }
+          ,warning = warning
+          ,error = error )
+  }
+
+# Execution
+foo(2)
 ```
 
+The functionality of `tryCatch()` can be coupled with _program re-starts_ in order to be able to run the function again with the substitution of input values gracefully. This is achieved by combining `tryCatch()`, `invokeRestart()` and `withRestarts()`. Sample code for this behaviour is found below.
+
+```{r}
+foo = function(z,
+               
+               ## WARNING FUNCTION with restart
+               warning = function(w) {
+                 print( paste('warning:',w) );
+                 invokeRestart("correctArgForWarnings")
+                 },
+               
+               ## ERROR FUNCTION with restart
+               error = function(e) {
+                 print(paste('error:',e));
+                 invokeRestart("correctArgForErrors")
+               }
+               
+               ){
+  
+  ## Loop is repeated until a break is specified
+  repeat 
+    ## 1. catch errors *********************
+    withRestarts(   
+     
+      ## 2. catch warnings =================
+      withRestarts(
+        
+        ## TRY CATCH BLOCk -----------------
+        tryCatch(
+          { 
+          print(paste("attempt log operation for z:",z))
+          return(log(z))
+          } # return break the repeat loop
+          ,warning = warning
+          ,error = error )
+          ##------------------------------------
+        
+        , correctArgForWarnings = function() {z <<- -z} ) 
+      ##=================================
+      
+      , correctArgForErrors = function() {z <<- 1})
+       ##*********************************
+}
+
+foo(2)
+```
+
+Now let's try with an invalid value for a logarithm.
+
+```{r}
+# invokes the warning’s handler
+foo(-2)
+```
+
+### Debugging
 In R, there are a few functions which help with debugging functions, we can set a `debug()` function working in order to check the status of a function.
-Additionally one can use `browse()` and `traceback()` to check whether the function is doing the correct thing.
+Additionally one can use `browser()` to interrupt execution and check the environment at a specific timepoint or `traceback()` to print the call stack of the last uncaught error.
 
 ### Profiling with `rbenchmark`
 Also, one can check for function performance and benchmarking with specific libraries in R like `rbenchmark::benchmark()`.
@@ -306,15 +474,48 @@ Calling this function, we can manage the avergae execution time and get data fro
 Optimizing code to make it faster is an iterative process which essentially entails three steps including *finding the bottleneck*, trying to *eliminate it* or substitute it and then *repeat the process* until the code is "fast enough".
 These steps are facilitated by profiling the code, some demonstration is present below.
 
+As an example, we can demonstrated the profiling of a [_recursive function_](https://en.wikipedia.org/wiki/Recursive_function) which calculates a factorial value from an integer. This can be implemented in two ways, either by taking advantage of recursion or by exploiting iteration with `for` loops.
+
 ```{r}
-# Code profiling
+# Recursion vs Iteration
+fact.recursive = function(n){
+  ifelse (n==1, 1, (n * fact.recursive(n-1) ) )
+}
+
+fact.it = function(n){
+  ans = 1
+  for (ii in 2:n) ans = ans * ii
+  ans
+}
+```
+
+The simpler way to obtain a benchmark is to check the _elapsed time_ for the execution of the two functions.
+
+```{r}
+# Recursive
+system.time(fact.recursive(100))["elapsed"]
+```
+
+And now the iteration-based one.
+
+```{r}
+# Recursive
+system.time(fact.recursive(100))["elapsed"]
 ```
 
 The main thing is to understand how R handles every calculation, this procedure is known as **profiling** can be achieved in R by different means and packages.
-We can demonstrate this by applying this workflow to a linear regression setting.
+We can demonstrate this by applying this workflow to a linear regression setting while using the package `rbenchmark`.
 
 ```{r}
-# Linear regression code profiling
+library(rbenchmark)
+
+# benchmark() is a simple wrapper around system.time()
+benchmark( fact.recursive(15)
+          , fact.it(15)
+          
+          , order="relative"
+          , replications=5000
+          )
 ```
 
 ## The packaging system in R
@@ -367,3 +568,19 @@ random_matrix <- matrix(runif(100), ncol=10)
 ```
 
 The above matrix will then be loaded and included in the worskpace after the package has been loaded and can be called using `random_matrix` as a variable, the same way that `mt_cars` is sourced from ggplot's default datasets.
+
+## Web applications with Shiny
+### Static vs Dynamic websites
+Static websites are called like so since they are deployd but they cannot interact with users in terms of data flow and server requests. Dynamic sites instead allow interactions by using an infrastructure based on _frontend_ and _backend_ structures. One of the most used wrappers for interactive site building in R is [Shiny](https://shiny.rstudio.com/). 
+
+### Shiny apps
+Shiny apps work by separating UI and Server (a live R session) which end up communicating UI requests happening in the frontend to the backend engine.
+In Shiny, this crosstalk happens via the creation of a Fluid Page, which is a page type that resizes itself while browsing around. In doing this, Shiny defines a layout that can vary based on the size of the page in a _reactive_ way. 
+In practice, this is implemented via two files, a `ui.R` (_user interface_) and a `server.R` (_backend_).
+
+### HTML tags
+What Shiny does behind the scenes is to port HTML into R by wrapping up HTML tag creation with R function calls. The main ones for structural design are _panel functions_ whithin which we can group different elements. Panels can be controlled in terms of layout by using layout functions acting within the `FluidPage()` one.
+
+### Interactivity with Widgets
+In order to create a dynamic and interactive page in Shiny we can use **Widgets**. Once a widget is defined, it needs to know its imputs and outputs as lists, as well as their location in the server side. An important thing is that server-side inputs should be _read-only_, if inputs are actively modified, then the page will throw an error.
+There will always a unique correspondance between input and output in Shiny's _reactive programming_ paradigms since both of them are linked and named across functions.

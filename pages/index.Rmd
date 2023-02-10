@@ -1,13 +1,7 @@
 ---
 author: "Mattia Toninelli"
 date: "06/02/23"
-output: 
-  html_document:
-    toc: true
-    toc_float: true
-    toc_collapsed: true
-    toc_depth: 3
-    number_sections: true
+output: html_document
 editor_options: 
   markdown: 
     wrap: sentence
@@ -22,4 +16,6 @@ The course will give an overview of R as an instrument for programming and effic
 It will start with the basics and then develop into an exploration of ways to improve code performance and structure.
 All of the materials from the lectures can be found [here](https://www.ceredalab.com/SPC/index.html), with relevant information related to the authors as well.
 
-The course, which lasted one week, has been thaught by U. Pozzoli, F. Iannelli and M. Cereda at [IEO](https://www.research.ieo.it/) in Milan.
+The course, which lasted one week, has been thaught by Dr. _U. Pozzoli_, Dr. _F. Iannelli_ and Dr. _M. Cereda_ at [IEO](https://www.research.ieo.it/) in Milan.
+
+All the material from the course is either mine or provided by the instructors. All of the code present within this site is readily implementable in a developing environment like [RStudio](https://posit.co/).

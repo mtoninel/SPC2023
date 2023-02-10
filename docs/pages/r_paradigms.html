@@ -161,6 +161,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="menu-text">Genomics</span></a>
   </li>  
 </ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mtoninel"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/toninells"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
               <div class="quarto-toggle-container">
                   <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
               </div>
@@ -284,9 +296,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>matmul</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>          [,1]
-[1,] 1.2873007
-[2,] 0.4896845</code></pre>
+<pre><code>         [,1]
+[1,] 1.392264
+[2,] 1.587887</code></pre>
 </div>
 </div>
 </section>
@@ -328,7 +340,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x7ff9b2712078&gt;
+&lt;bytecode: 0x7fa263c1fa58&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call methods function on a generic function, in this case mean</span></span>
@@ -373,8 +385,8 @@ see '?methods' for accessing help and source code</code></pre>
 
 function (object) 
 standardGeneric("show")
-&lt;bytecode: 0x7ff9b24ba588&gt;
-&lt;environment: 0x7ff9b3646560&gt;
+&lt;bytecode: 0x7fa267f2d2c0&gt;
+&lt;environment: 0x7fa2652cd070&gt;
 Methods may be defined for arguments: object
 Use  showMethods("show")  for currently available ones.
 (This generic function excludes non-simple inheritance; see ?setIs)</code></pre>
@@ -484,14 +496,14 @@ x="bank_account"</code></pre>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale (mean 0 and variance 1)</span></span>
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scale</span>(m, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           [,1]       [,2]       [,3]
-[1,]  0.9271726 -1.0843803  0.7154837
-[2,] -1.0596259  0.8858318 -1.1426382
-[3,]  0.1324532  0.1985485  0.4271545
+<pre><code>            [,1]        [,2]        [,3]
+[1,]  0.03417306 -1.02590357 -1.02888681
+[2,]  0.98247545  0.97190864  0.06052275
+[3,] -1.01664851  0.05399492  0.96836405
 attr(,"scaled:center")
-[1] 0.2866667 0.6366667 0.7666667
+[1] 0.5966667 0.6200000 0.5800000
 attr(,"scaled:scale")
-[1] 0.2516611 0.2182506 0.3121431</code></pre>
+[1] 0.3901709 0.1852026 0.3304542</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sweep (apply a vector over a matrix summarizing an operation)</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># median value of each row of the matix</span></span>
@@ -499,10 +511,10 @@ attr(,"scaled:scale")
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subtracting the median value of each row</span></span>
 <span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sweep</span>(m, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">STATS =</span> row.med, <span class="at">FUN =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      [,1]  [,2] [,3]
-[1,]  0.00 -0.12 0.47
-[2,] -0.39  0.42 0.00
-[3,] -0.36  0.00 0.22</code></pre>
+<pre><code>      [,1] [,2]  [,3]
+[1,]  0.18    0 -0.19
+[2,]  0.18    0 -0.20
+[3,] -0.43    0  0.27</code></pre>
 </div>
 </div>
 </section>

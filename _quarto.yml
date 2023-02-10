@@ -1,7 +1,8 @@
 project:
   type: website
+  output-dir: docs # For pages publishing
 
-# For top navigation, organize day-by-day tabs
+# Top navbar
 website:
   title: "R Programming Course"
   navbar:
@@ -24,6 +25,7 @@ website:
       - icon: twitter
         href: https://twitter.com/toninells
 
+# Themes, can be changed with .css files and .scss 
 format:
   html:
     theme:

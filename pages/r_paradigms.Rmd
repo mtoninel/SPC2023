@@ -571,15 +571,52 @@ The above matrix will then be loaded and included in the worskpace after the pac
 
 ## Web applications with Shiny
 ### Static vs Dynamic websites
-Static websites are called like so since they are deployd but they cannot interact with users in terms of data flow and server requests. Dynamic sites instead allow interactions by using an infrastructure based on _frontend_ and _backend_ structures. One of the most used wrappers for interactive site building in R is [Shiny](https://shiny.rstudio.com/). 
+Static websites are called like so since they are deployd but they cannot interact with users in terms of data flow and server requests. Dynamic sites instead allow interactions by using an infrastructure based on _frontend_ and _backend_ structures.
+An example of static page is provided in the below diagram.
+
+::: {align="center"}
+<img src="../pics/static_page.svg" width = 700/>
+:::
+
+An example of a dynamic webpage is provided in the below diagram, notice the presence of server-side scripting capability.
+
+::: {align="center"}
+<img src="../pics/dynamic_page.svg" width = 700/>
+:::
+
+One of the most used wrappers for interactive site building in R is [Shiny](https://shiny.rstudio.com/). 
 
 ### Shiny apps
 Shiny apps work by separating UI and Server (a live R session) which end up communicating UI requests happening in the frontend to the backend engine.
 In Shiny, this crosstalk happens via the creation of a Fluid Page, which is a page type that resizes itself while browsing around. In doing this, Shiny defines a layout that can vary based on the size of the page in a _reactive_ way. 
 In practice, this is implemented via two files, a `ui.R` (_user interface_) and a `server.R` (_backend_).
+The _UI_ is effectively an HTML interface which in Shiny is mediated by [Bootstrap](https://getbootstrap.com/), which is the most popular HTML, CSS, and JS framework for developing responsive, mobile first projects on the web.
 
 ### HTML tags
-What Shiny does behind the scenes is to port HTML into R by wrapping up HTML tag creation with R function calls. The main ones for structural design are _panel functions_ whithin which we can group different elements. Panels can be controlled in terms of layout by using layout functions acting within the `FluidPage()` one.
+What Shiny does behind the scenes is to port HTML into R by wrapping up HTML _tag_ creation with R function calls (110 to be exact, as many as HTML tags). The main ones for structural design are _panel functions_ whithin which we can group different elements. Panels can be controlled in terms of layout by using layout functions acting within the `FluidPage()` one. The code below is representative of `ui.R`.
+
+```{r}
+# An example
+library(shiny)
+
+fluidPage( # Fluid page
+  
+  titlePanel("A Shiny App!"),
+  
+  sidebarLayout(
+    
+    sidebarPanel(HTML('<p>
+         <label>A numeric input:</label><br /> 
+         <input type="number" name="n" value="0" min="1" max="30" />
+         </p>')),
+   
+     mainPanel(
+      p(strong("bold font "), em("italic font")),
+      p(code("code block")),
+      a(href="http://www.google.com", "link to Google"))
+  )
+)
+```
 
 ### Interactivity with Widgets
 In order to create a dynamic and interactive page in Shiny we can use **Widgets**. Once a widget is defined, it needs to know its imputs and outputs as lists, as well as their location in the server side. An important thing is that server-side inputs should be _read-only_, if inputs are actively modified, then the page will throw an error.

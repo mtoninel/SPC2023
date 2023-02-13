@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>R Programming Course – statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">R Programming Course</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/prog_base.html">
+ <span class="menu-text">Basics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/r_paradigms.html">
+ <span class="menu-text">R</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="../pages/statistics.html" aria-current="page">
+ <span class="menu-text">Statistics</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../pages/r_genomics.html">
+ <span class="menu-text">Genomics</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/mtoninel"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/toninells"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link active" data-scroll-target="#descriptive-statistics">Descriptive Statistics</a>
+  <ul class="collapse">
+  <li><a href="#distributions-and-variables" id="toc-distributions-and-variables" class="nav-link" data-scroll-target="#distributions-and-variables">Distributions and variables</a></li>
+  <li><a href="#indices-of-center-position" id="toc-indices-of-center-position" class="nav-link" data-scroll-target="#indices-of-center-position">Indices of center position</a></li>
+  <li><a href="#indices-of-dispersion" id="toc-indices-of-dispersion" class="nav-link" data-scroll-target="#indices-of-dispersion">Indices of dispersion</a></li>
+  </ul></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data">Missing data</a>
+  <ul class="collapse">
+  <li><a href="#handling-missing-data" id="toc-handling-missing-data" class="nav-link" data-scroll-target="#handling-missing-data">Handling missing data</a></li>
+  </ul></li>
+  <li><a href="#data-visualization-solutions" id="toc-data-visualization-solutions" class="nav-link" data-scroll-target="#data-visualization-solutions">Data visualization solutions</a>
+  <ul class="collapse">
+  <li><a href="#continuous-variables" id="toc-continuous-variables" class="nav-link" data-scroll-target="#continuous-variables">Continuous variables</a></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables">Categorical variables</a></li>
+  <li><a href="#plot-data-using-ggally" id="toc-plot-data-using-ggally" class="nav-link" data-scroll-target="#plot-data-using-ggally">Plot data using GGally</a></li>
+  </ul></li>
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis Testing</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<section id="descriptive-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="descriptive-statistics">Descriptive Statistics</h2>
+<p>In this section, we will focus on descriptive statistics and indices, and how these relate to the characteristics of numerical distributions.</p>
+<section id="distributions-and-variables" class="level3">
+<h3 class="anchored" data-anchor-id="distributions-and-variables">Distributions and variables</h3>
+<p>First of all, distributions are collections of data points from a given variable which are <em>sampled</em> from a population of interest.</p>
+<div class="cell" data-layout-align="center">
+
+</div>
+<p>The <em>types of variables</em> we can encounter are diverse. We can have <em>categorical</em> and <em>numerical</em> variables, the former can be ordinal as well, while the latter can either be continuous or discrete. In the following dataset, named <code>cv_dis</code>, we have 3 variables of interest relating to pressures, summarized in 6 columns. The variables of interest are the kind of pressure (<em>sys</em> vs <em>dia</em>) and the time point at which the measure was taken. We have both categorical and continuous variables in <code>cv_dis</code>, and some of the columns need to be converted into <em>factors</em>, since they are originally recognized as <code>dbl</code>, so numeric, while we know that they represent categories encoded in integer numbers.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Manipulate data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>cv_dis_operated <span class="ot">&lt;-</span> cv_dis <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"bloodp_visit"</span>, <span class="at">values_to =</span> <span class="st">"pressure"</span>, sys_1<span class="sc">:</span>dia_3) <span class="sc">%&gt;%</span> <span class="co"># Pivot on pressures</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(bloodp_visit, <span class="fu">c</span>(<span class="st">"type_p"</span>, <span class="st">"visit"</span>), <span class="at">sep =</span> <span class="st">"_"</span>) <span class="sc">%&gt;%</span> <span class="co"># separate type of pressure and number of visit in two columns</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"type_p"</span>, <span class="at">values_from =</span> <span class="st">"pressure"</span>) <span class="co"># pivot wider to gather the diastolic and systolic pressure as two separate columns</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Now bind the first dataset to other patients from a different dataset</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cv_dis_binded <span class="ot">&lt;-</span> cv_dis <span class="sc">%&gt;%</span> <span class="fu">bind_rows</span>(cv_dis_2)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Join additional clinical information</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>cv_dis_joined <span class="ot">&lt;-</span> cv_dis <span class="sc">%&gt;%</span> <span class="fu">full_join</span>(cv_dis_3, <span class="at">by=</span><span class="fu">c</span>(<span class="st">'pat_id'</span><span class="ot">=</span><span class="st">'patient'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can move onto descriptive statistics and the use of indices to describe data.</p>
+</section>
+<section id="indices-of-center-position" class="level3">
+<h3 class="anchored" data-anchor-id="indices-of-center-position">Indices of center position</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean (overestimates many times)                                  - mean(Variable)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Geometric mean (for avg growth rates and logged data) - prod(Variable)^(1/(n()-sum(is.na(Variable))))</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Harmonic mean (for avg ratios)                        - 1/mean(1/Variable)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Median (splits the distribution in 2 equal parts)     - median(Variable)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="indices-of-dispersion" class="level3">
+<h3 class="anchored" data-anchor-id="indices-of-dispersion">Indices of dispersion</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantiles (quartile and IQR)                            - quantile(Variable, probs = 0.25)  --&gt; percentile 25th</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Min                                                     - min(Variable)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Max                                                     - max(Variable)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Variance (uses the arithmetic mean)                     - var(Variable)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Std Dev (uses the arithmetic mean)                      - sd(Variable)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Coefficient of var (unitless, comparable to each other) - sd(Variable) / mean(Variable)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Excluding missing values from analyses (one possible way) <code>na.rm = TRUE</code> (ex. <code>mean(Variable, na.rm = TRUE)</code>). Data collection for statistics happens in samples coming from a bigger population, so the data is always a representative piece of information coming from the population. The <em>coefficient of variation</em> can be extremely useful to compare variability across different kinds of variables. It is clear that since these indices are related to the arithmetic mean, all of them are influenced by the validity of the arithmetic mean on the distribution itself. This means that the arithmetic mean, and the associated dispersion indices, need to be used carefully when analyzing data distributions, since they might not be very representiative (for example in the case of heavily skewed distributions).</p>
+</section>
+</section>
+<section id="missing-data" class="level2">
+<h2 class="anchored" data-anchor-id="missing-data">Missing data</h2>
+<section id="handling-missing-data" class="level3">
+<h3 class="anchored" data-anchor-id="handling-missing-data">Handling missing data</h3>
+<p>In this section, we are going to focus on handling missing data, which can be a problem in R for different reasons, first of all it invalidates any kind of statistical analysis while propagating errors in code given silent handling habits in R. We start by loading the <code>finalfit</code> package. This package will provide very useful function to have a look at the data and assess the status of the variables.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Translate some of the variables in the dataset to factors since they are char or dbl</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cv_dis <span class="ot">&lt;-</span> cv_dis <span class="sc">%&gt;%</span> <span class="fu">mutate_at</span>(<span class="fu">vars</span>(gender, chol,  gluc, cardio), as.factor)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Sum up the condition of the dataset by using the finalfit functionality</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>glimpse_df <span class="ot">&lt;-</span> cv_dis <span class="sc">%&gt;%</span> <span class="fu">ff_glimpse</span>()</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># This returns a list with 2 dfs, one for categorical and one for continous variables</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>glimpse_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$Continuous
+        label var_type   n missing_n missing_percent  mean    sd   min
+pat_id pat_id    &lt;dbl&gt; 634         0             0.0 359.9 208.9   1.0
+age       age    &lt;dbl&gt; 634         0             0.0  54.0   9.6  39.0
+height height    &lt;dbl&gt; 608        26             4.1 164.2   8.0 130.0
+weight weight    &lt;dbl&gt; 603        31             4.9  73.6  13.9  40.0
+sys_1   sys_1    &lt;dbl&gt; 634         0             0.0 125.1  16.7  78.9
+sys_2   sys_2    &lt;dbl&gt; 634         0             0.0 126.3  16.6  80.0
+sys_3   sys_3    &lt;dbl&gt; 557        77            12.1 127.7  16.7  83.8
+dia_1   dia_1    &lt;dbl&gt; 634         0             0.0  79.8  10.0  21.4
+dia_2   dia_2    &lt;dbl&gt; 634         0             0.0  81.0   9.5  60.0
+dia_3   dia_3    &lt;dbl&gt; 557        77            12.1  82.3   9.6  58.7
+       quartile_25 median quartile_75   max
+pat_id       176.2  360.0       540.8 720.0
+age           49.0   54.0        59.0 162.0
+height       158.8  165.0       170.0 187.0
+weight        65.0   72.0        81.0 123.0
+sys_1        117.0  120.3       136.2 207.3
+sys_2        120.0  120.0       140.0 210.0
+sys_3        118.8  123.1       137.7 212.6
+dia_1         75.6   79.1        86.5 122.9
+dia_2         80.0   80.0        90.0 120.0
+dia_3         78.5   81.5        88.2 124.8
+
+$Categorical
+        label var_type   n missing_n missing_percent levels_n        levels
+gender gender    &lt;fct&gt; 634         0             0.0        2      "F", "M"
+chol     chol    &lt;fct&gt; 634         0             0.0        3 "1", "2", "3"
+gluc     gluc    &lt;fct&gt; 634         0             0.0        3 "1", "2", "3"
+cardio cardio    &lt;fct&gt; 634         0             0.0        2      "0", "1"
+       levels_count   levels_percent
+gender     403, 231           64, 36
+chol    478, 74, 82       75, 12, 13
+gluc    530, 47, 57 83.6,  7.4,  9.0
+cardio     314, 320           50, 50</code></pre>
+</div>
+</div>
+<p>This function is really useful to summarize the data, it conveniently highlights missing values as well. In the continuous values dataframe we can also find additional information related to indices and range of the continuous data. Doing this, we can immediately spot the fact that the maximum age value is <em>162</em>, which of course is wrong (below).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>glimpse_df<span class="sc">$</span>Continuous[,<span class="fu">c</span>(<span class="st">'min'</span>,<span class="st">'max'</span>,<span class="st">'missing_n'</span>,<span class="st">'missing_percent'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         min   max missing_n missing_percent
+pat_id   1.0 720.0         0             0.0
+age     39.0 162.0         0             0.0
+height 130.0 187.0        26             4.1
+weight  40.0 123.0        31             4.9
+sys_1   78.9 207.3         0             0.0
+sys_2   80.0 210.0         0             0.0
+sys_3   83.8 212.6        77            12.1
+dia_1   21.4 122.9         0             0.0
+dia_2   60.0 120.0         0             0.0
+dia_3   58.7 124.8        77            12.1</code></pre>
+</div>
+</div>
+<p>Now, the <code>finalfit</code> package allows us to also plot missing values. In this case we can show where the missing values are located in the dataset, check for alignment of missing values within the data if we expect so (like if a there is a missing value for systolic pressure at a specific visit, then we also expect the diastolic pressure for that visit too) or check whether something unexpectd in missing values is happening. The <code>missing_pattern()</code> function instead allows us to understand which variables are more related in terms of missing values.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cv_dis <span class="sc">%&gt;%</span> <span class="fu">missing_plot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cv_dis <span class="sc">%&gt;%</span> <span class="fu">missing_pattern</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    pat_id age gender chol gluc cardio sys_1 sys_2 dia_1 dia_2 height weight
+510      1   1      1    1    1      1     1     1     1     1      1      1
+74       1   1      1    1    1      1     1     1     1     1      1      1
+23       1   1      1    1    1      1     1     1     1     1      1      0
+1        1   1      1    1    1      1     1     1     1     1      1      0
+18       1   1      1    1    1      1     1     1     1     1      0      1
+1        1   1      1    1    1      1     1     1     1     1      0      1
+6        1   1      1    1    1      1     1     1     1     1      0      0
+1        1   1      1    1    1      1     1     1     1     1      0      0
+         0   0      0    0    0      0     0     0     0     0     26     31
+    sys_3 dia_3    
+510     1     1   0
+74      0     0   2
+23      1     1   1
+1       0     0   3
+18      1     1   1
+1       0     0   3
+6       1     1   2
+1       0     0   4
+       77    77 211</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="data-visualization-solutions" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization-solutions">Data visualization solutions</h2>
+<section id="continuous-variables" class="level3">
+<h3 class="anchored" data-anchor-id="continuous-variables">Continuous variables</h3>
+<p>Here we are going to use the package <code>ggplot2</code> to visualize a few variables and eventually some relationships between them.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the ditribution of weights colored by cardiovascular status</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cv_dis, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill=</span>cardio)) <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'0'</span><span class="ot">=</span><span class="st">'#6c757d'</span>, <span class="st">'1'</span><span class="ot">=</span><span class="st">'#fb8b24'</span>))<span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(cardio<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Additionally, on top of this we can add a density estimation which might be useful to compare our current distribution to a reference distribution like a standard normal one.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the ditribution of weights colored by cardiovascular status</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cv_dis, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">fill=</span>cardio)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span>..density..)) <span class="sc">+</span> <span class="co"># This is a built-in way to plot a density on an histogram</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color=</span><span class="st">'black'</span>, <span class="at">fill=</span><span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'0'</span><span class="ot">=</span><span class="st">'#6c757d'</span>, <span class="st">'1'</span><span class="ot">=</span><span class="st">'#fb8b24'</span>))<span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(cardio<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also plot different relationships between continuous variables in the dataset one versus the other to check for relationships in the data. For example, here we can show the relationship between the different blood pressures. The density normalizes an histogram by taking the single binwidths to the number of observations falling within each bin.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the distributions of weights and systolic pressure as a scatterplot colored by cardiovascular status (a bit cluttered)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cv_dis, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> sys_1, <span class="at">col =</span> cardio)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">3</span>, <span class="at">alpha=</span><span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'0'</span><span class="ot">=</span><span class="st">'#6c757d'</span>, <span class="st">'1'</span><span class="ot">=</span><span class="st">'#fb8b24'</span>))<span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the distributions of weights and systolic pressure arranged by cardiovascular status (better)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cv_dis, <span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> sys_1)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density2d_filled</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(cardio<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-10-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What about distribution of weights across genders using boxplots?</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gender proportions across cardiac condition</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cv_dis, <span class="fu">aes</span>(<span class="at">x =</span> gender, <span class="at">y=</span>height, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width=</span><span class="fl">0.25</span>)<span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'F'</span><span class="ot">=</span><span class="st">'#C97B84'</span>, <span class="st">'M'</span><span class="ot">=</span><span class="st">'#388697'</span>))<span class="sc">+</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="categorical-variables" class="level3">
+<h3 class="anchored" data-anchor-id="categorical-variables">Categorical variables</h3>
+<p>In this case we are going to plot a categorical variable.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gender proportions across cardiac condition</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cv_dis, <span class="fu">aes</span>(<span class="at">x =</span> cardio, <span class="at">fill =</span> gender)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">'F'</span><span class="ot">=</span><span class="st">'#C97B84'</span>, <span class="st">'M'</span><span class="ot">=</span><span class="st">'#388697'</span>))<span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-data-using-ggally" class="level3">
+<h3 class="anchored" data-anchor-id="plot-data-using-ggally">Plot data using GGally</h3>
+<p>The package <code>GGally</code> allows the user to plot mutliple variable pairwise in order to check for relationships within the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use GGally to plot pairwise relationships with variables</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>ggpair_plot <span class="ot">&lt;-</span> cv_dis <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span><span class="fu">one_of</span>(<span class="st">'pat_id'</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>ggpair_plot <span class="sc">+</span> <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis Testing</h2>
+<p>Hypothesis testing is the process by which we can understand whether variability between two or more distributions is statistically significant. In statistics, we end up having different hypothesis, the null hypothesis (<span class="math inline">\(H_0\)</span>) and the opposite of the null hypothesis (the alternative hypothesis), which is the actual hypothesis (<span class="math inline">\(H_1\)</span>). <em>Successful tests of difference explain the outcome by rejecting the null hypothesis</em>. For instance, a t-test (a <em>parametric</em> test) posits the null hypothesis as the means of two distributions being equal. This means that we are hoping that the difference between the two means is actually 0. Out of all the samples we can pick from a population, the mean of which, we can calculate, the number of outcomes of subtracting the two means will lead to the generation of a probability distribution of the delta-mean being far off 0 given the thruthfulness of the null hypothesis. Since, thanks to the central limit theorem, this distribution will be normal with mean 0, we can set thresholds on the probability distribution over which we can reject the null hypothesis (the actual <em>P</em>-value used). Since the distribution is symmetrical, we can either test for mean differences in both directions (<span class="math inline">\(\mu_a = \mu_b\)</span>) with a two-sided test, if we instead already know which is the expected outcome wanted (i.e.&nbsp;that the mean of one distribution <em>should</em> be higher than the other one) we need to use a one-tailed test.</p>
+<p><strong>As a rule of thumb, non-parametric tests are used when sample sizes are small, data is better represented by the median and/ord we have ordinal data or ranked data.</strong></p>
+<p>Sample sizes are able to improve the power of a test since they reduce <em>standard error</em> (<span class="math inline">\(\mu / \sqrt{n}\)</span>), which in turn defines the confidence interval around the means of the two samples distributions (which, in the case of a t-test, are defined using a parameter <em>z</em> which comes from the Student’s t distribution). In other cases, we can use parametric tests with small sample sizes in the case we know that the sample we are looking at comes from a normally distributed population (i.e.&nbsp;heights in the population).</p>
+<p>Tests that compare different continuous distributions can use specific measures of the distributions (i.e.&nbsp;mean, <em>parametric</em>) or can just be based on the median of the distribution (<em>non-parametric</em>).</p>
+<p>Here we will show a demo of tests and when they are optimally used, first of all we start with testing differences between continuous variables in a parametric way, these can be within group (<em>paired</em>) or across groups (<em>unpaired</em>) and are the t-test (indipendent or paired) and ANOVAs.</p>
+<p>Concerning categorical variables, we can test the significance co-occurrence of two or more by using either a Fisher’s exact test or a <span class="math inline">\({\chi}^2\)</span> test.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pick some data randomly grouped by cardiac condition</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">111</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>cv_dis_test <span class="ot">&lt;-</span> cv_dis <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_at</span>(<span class="fu">vars</span>(gender, chol, gluc, cardio), as.factor) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cardio) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample_n</span>(<span class="dv">200</span>) <span class="sc">%&gt;%</span>  <span class="co"># we can test also paired samples</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Two-group comparison, categorical variables (chi-squared or Fisher's exact test)</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Is cardiovascular disease incidence different between males and females?</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># This test is very powerful with large (&gt;5 in at least a square) sample size, we will use Fisher's instead.</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(cv_dis_test<span class="sc">$</span>cardio, cv_dis_test<span class="sc">$</span>gender)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1223074</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do this in tidyverse way</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>cv_dis_test <span class="sc">%&gt;%</span> </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pval_chi =</span> <span class="fu">chisq.test</span>(cardio, gender)<span class="sc">$</span>p.value,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">pval_fis =</span> <span class="fu">fisher.test</span>(cardio, gender)<span class="sc">$</span>p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  pval_chi pval_fis
+     &lt;dbl&gt;    &lt;dbl&gt;
+1    0.122    0.122</code></pre>
+</div>
+</div>
+<p>From this we can conclude that the test is not significant based on a chi-squared distribution value, therefore we accept the null hypothesis that cardiac conditions are the same across males and females.</p>
+<p>In this following case, we can instead compare differences between two continuous distributions (systolic pressures across cardiac conditions). Here, given a condition of pseudo-normality, we can use a t-test (independent) to compare the means of the distributions.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## -- Independent t-test</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sys_1 <span class="sc">~</span> cardio, <span class="at">data =</span> cv_dis_test)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  sys_1 by cardio
+t = -9.7267, df = 354.9, p-value &lt; 2.2e-16
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -17.28831 -11.47299
+sample estimates:
+mean in group 0 mean in group 1 
+       118.4320        132.8126 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(sys_1 <span class="sc">~</span> cardio, <span class="at">data =</span> cv_dis_test)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5.602789e-20</code></pre>
+</div>
+</div>
+<p>In this case instead we do see a difference, and in fact, if we plot the distributions and compare them even visually, we can appreciate a visible difference.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cv_dis_test <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cardio, <span class="at">y =</span> sys_1)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <em>Welch’s correction</em> is telling us that the function is taking care of the difference in variances in the two distributions. This behaviour is default in R. This takes care of the variance assumption (which can be assessed with a Levene test) in a t-test, the other main assumption about normality is actually checked using either a Shapiro-Wilk test or a Kolmogorov-Smirnov test. Both of these tests posit that the null hypothesis is normality, therefore low p-values in these tests mean that the distributions are not normal. With these tests we need to be careful since they can be quite strict, meaning that many times they might indicate to reject the null hypothesis even if the distribution appears quite normal and we feel safe using a parametric test.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for normality</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># graphically check normal distribution</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cv_dis_test, <span class="fu">aes</span>(sys_1)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">stat</span>(density)), <span class="at">binwidth =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun =</span> dnorm, </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(cv_dis_test<span class="sc">$</span>sys_1, <span class="at">na.rm =</span> T), <span class="at">sd =</span> <span class="fu">sd</span>(cv_dis_test<span class="sc">$</span>sys_1, <span class="at">na.rm =</span> T)), </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">lwd =</span> <span class="dv">2</span>, </span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">'#fb8b24'</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>( <span class="sc">~</span> cardio, <span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">scales =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="statistics_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># shapiro test</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>cardio_0 <span class="ot">&lt;-</span> cv_dis_test <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cardio <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(sys_1)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>cardio_1 <span class="ot">&lt;-</span> cv_dis_test <span class="sc">%&gt;%</span> <span class="fu">filter</span>(cardio <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(sys_1)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(cardio_0)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  cardio_0
+W = 0.88339, p-value = 2.485e-11</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(cardio_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  cardio_1
+W = 0.95269, p-value = 3.457e-06</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cv_dis_test <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cardio) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">shap_test =</span> <span class="fu">shapiro.test</span>(sys_1)<span class="sc">$</span>p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  cardio shap_test
+  &lt;fct&gt;      &lt;dbl&gt;
+1 0       2.48e-11
+2 1       3.46e- 6</code></pre>
+</div>
+</div>
+<p>In the case we need to use a non-parametric test, we can use a Mann-Withney U test or a Wilcoxon-ranked-sum test. The first is for paired data while the second is for unpaired data. In R, these two are both implemented in a single function as shown below.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>cv_dis_test <span class="sc">%&gt;%</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">pval_t      =</span> <span class="fu">wilcox.test</span>(sys_1 <span class="sc">~</span> cardio)<span class="sc">$</span>p.value,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">pval_mw_pair =</span> <span class="fu">wilcox.test</span>(sys_1 <span class="sc">~</span> cardio, <span class="at">paired =</span> T)<span class="sc">$</span>p.value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+    pval_t pval_mw_pair
+     &lt;dbl&gt;        &lt;dbl&gt;
+1 1.67e-18     1.55e-16</code></pre>
+</div>
+</div>
+<p>In the scenario of comparing multiple distributions, using ANOVA we need to keep in mind that it is just referring p-values for differences in means from one to the other samples. In this way, we will then need a <em>post-hoc</em> test in order to check pairwise differences between means.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

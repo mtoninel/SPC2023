@@ -155,6 +155,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="menu-text">R</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="../pages/statistics.html">
+ <span class="menu-text">Statistics</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="../pages/r_genomics.html" aria-current="page">
  <span class="menu-text">Genomics</span></a>
   </li>  
@@ -649,6 +653,123 @@ views:
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear circos environment</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.clear</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Interestingly, we can initialize a circos plot in R already containing genomic coordinates in the form of chromosome ideograms.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.initializeWithIdeogram</span>(<span class="at">species =</span> <span class="st">"hg19"</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="st">"Human Chr"</span>, <span class="at">cex =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We also have the ability of plotting transcript sequences, in the following plot we show transcript isoforms for <em>TP53</em>, <em>TP63</em> and <em>TP73</em>.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Map coordinates</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">name  =</span> <span class="fu">c</span>(<span class="st">"TP53"</span>,  <span class="st">"TP63"</span>,    <span class="st">"TP73"</span>),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">7565097</span>, <span class="dv">189349205</span>, <span class="dv">3569084</span>),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">end   =</span> <span class="fu">c</span>(<span class="dv">7590856</span>, <span class="dv">189615068</span>, <span class="dv">3652765</span>))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.genomicInitialize</span>(df)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Get transcripts and insert them in object</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>tp_family <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">system.file</span>(<span class="at">package =</span> <span class="st">"circlize"</span>, <span class="st">"extdata"</span>, <span class="st">"tp_family_df.rds"</span>))</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.genomicInitialize</span>(tp_family)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.track</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), </span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">bg.col =</span> <span class="fu">c</span>(<span class="st">"#FF000040"</span>, <span class="st">"#00FF0040"</span>, <span class="st">"#0000FF40"</span>), </span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">bg.border =</span> <span class="cn">NA</span>, <span class="at">track.height =</span> <span class="fl">0.05</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add rectangles with genes, and transcripts lines</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">max</span>(<span class="fu">tapply</span>(tp_family<span class="sc">$</span>transcript, tp_family<span class="sc">$</span>gene, <span class="cf">function</span>(x) <span class="fu">length</span>(<span class="fu">unique</span>(x))))</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.genomicTrack</span>(tp_family</span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>                    , <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, n <span class="sc">+</span> <span class="fl">0.5</span>)</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>                    , <span class="at">panel.fun =</span> <span class="cf">function</span>(region, value, ...) {</span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>                        all_tx <span class="ot">=</span> <span class="fu">unique</span>(value<span class="sc">$</span>transcript)</span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(all_tx)) {</span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>                            l <span class="ot">=</span> value<span class="sc">$</span>transcript <span class="sc">==</span> all_tx[i]</span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>                            <span class="co"># for each transcript</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>                            current_tx_start <span class="ot">=</span> <span class="fu">min</span>(region[l, <span class="dv">1</span>])</span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>                            current_tx_end <span class="ot">=</span> <span class="fu">max</span>(region[l, <span class="dv">2</span>])</span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">circos.lines</span>(<span class="fu">c</span>(current_tx_start, current_tx_end), </span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>                                <span class="fu">c</span>(n <span class="sc">-</span> i <span class="sc">+</span> <span class="dv">1</span>, n <span class="sc">-</span> i <span class="sc">+</span> <span class="dv">1</span>), <span class="at">col =</span> <span class="st">"#CCCCCC"</span>)</span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">circos.genomicRect</span>(region[l, , <span class="at">drop =</span> <span class="cn">FALSE</span>], <span class="at">ytop =</span> n <span class="sc">-</span> i <span class="sc">+</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.4</span>, </span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>                                <span class="at">ybottom =</span> n <span class="sc">-</span> i <span class="sc">+</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.4</span>, <span class="at">col =</span> <span class="st">"orange"</span>, <span class="at">border =</span> <span class="cn">NA</span>)</span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>                        }</span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>                      }</span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>                    , <span class="at">bg.border =</span> <span class="cn">NA</span>, <span class="at">track.height =</span> <span class="fl">0.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Clear object</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.clear</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We can also plot data and zoom into specific genomic positions or chromosomes.</p>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>extend_chromosomes <span class="ot">=</span> <span class="cf">function</span>(bed, chromosome, <span class="at">prefix =</span> <span class="st">"zoom_"</span>) {</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    zoom_bed <span class="ot">=</span> bed[bed[[<span class="dv">1</span>]] <span class="sc">%in%</span> chromosome, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    zoom_bed[[<span class="dv">1</span>]] <span class="ot">=</span> <span class="fu">paste0</span>(prefix, zoom_bed[[<span class="dv">1</span>]])</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rbind</span>(bed, zoom_bed)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>cytoband <span class="ot">=</span> <span class="fu">read.cytoband</span>()</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>cytoband_df <span class="ot">=</span> cytoband<span class="sc">$</span>df</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>chromosome <span class="ot">=</span> cytoband<span class="sc">$</span>chromosome</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>xrange <span class="ot">=</span> <span class="fu">c</span>(cytoband<span class="sc">$</span>chr.len, cytoband<span class="sc">$</span>chr.len[<span class="fu">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>)])</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>normal_chr_index <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">24</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>zoomed_chr_index <span class="ot">=</span> <span class="dv">25</span><span class="sc">:</span><span class="dv">26</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co"># normalize in normal chromsomes and zoomed chromosomes separately</span></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>sector.width <span class="ot">=</span> <span class="fu">c</span>(xrange[normal_chr_index] <span class="sc">/</span> <span class="fu">sum</span>(xrange[normal_chr_index]), </span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>                 xrange[zoomed_chr_index] <span class="sc">/</span> <span class="fu">sum</span>(xrange[zoomed_chr_index])) </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize ideogram</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.par</span>(<span class="at">start.degree =</span> <span class="dv">90</span>)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.initializeWithIdeogram</span>(<span class="fu">extend_chromosomes</span>(cytoband_df, <span class="fu">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>)), </span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">sector.width =</span> sector.width)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Add track</span></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>bed <span class="ot">=</span> <span class="fu">generateRandomBed</span>(<span class="dv">500</span>)</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.genomicTrack</span>(<span class="fu">extend_chromosomes</span>(bed, <span class="fu">c</span>(<span class="st">"chr1"</span>, <span class="st">"chr2"</span>)),</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.fun =</span> <span class="cf">function</span>(region, value, ...) {</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>        <span class="fu">circos.genomicPoints</span>(region, value, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.3</span>)</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Add a link from chr1 to the zoomed chr1</span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.link</span>(<span class="st">"chr1"</span>, <span class="fu">get.cell.meta.data</span>(<span class="st">"cell.xlim"</span>, <span class="at">sector.index =</span> <span class="st">"chr1"</span>),</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>    <span class="st">"zoom_chr1"</span>, <span class="fu">get.cell.meta.data</span>(<span class="st">"cell.xlim"</span>, <span class="at">sector.index =</span> <span class="st">"zoom_chr1"</span>),</span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">"#00000020"</span>, <span class="at">border =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="r_genomics_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details>
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">circos.clear</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 

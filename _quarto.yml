@@ -12,24 +12,29 @@ website:
       - href: ./pages/prog_base.Rmd
         text: Basics
       - href: ./pages/r_paradigms.Rmd
-        text: R  
+        text: R
+      - href: ./pages/statistics.Rmd
+        text: Statistics  
       - href: ./pages/r_genomics.Rmd
         text: Genomics
-    page-footer: 
-      background: light
-      left:
-        - "Copyright 2023, Mattia Toninelli"
     right: 
       - icon: github
         href: https://github.com/mtoninel
       - icon: twitter
         href: https://twitter.com/toninells
+  page-footer: 
+    center: "Copyright 2023, Mattia Toninelli"
 
 # Themes, can be changed with .css files and .scss 
 format:
   html:
-    theme: yeti
+    theme: 
+      - yeti
+      - sass_styling.scss
     css: styles.css
     toc: true
     toc_float: true
     toc_collapsed: true
+
+# Code theme
+highlight-style: ayu

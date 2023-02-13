@@ -353,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Diagonal </span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">diag</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2470563 0.4799018</code></pre>
+<pre><code>[1] 0.5280932 0.5663483</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Upper triangle</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">upper.tri</span>(m, <span class="at">diag =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -403,8 +403,8 @@ y    2    5    6    4</code></pre>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>matmul</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          [,1]
-[1,] 1.3912114
-[2,] 0.9433705</code></pre>
+[1,] 0.6986138
+[2,] 1.0878833</code></pre>
 </div>
 </div>
 </section>
@@ -446,7 +446,7 @@ y    2    5    6    4</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, ...) 
 UseMethod("print")
-&lt;bytecode: 0x7fcba736ada0&gt;
+&lt;bytecode: 0x7f9c5f86cdd8&gt;
 &lt;environment: namespace:base&gt;</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call methods function on a generic function, in this case mean</span></span>
@@ -491,8 +491,8 @@ see '?methods' for accessing help and source code</code></pre>
 
 function (object) 
 standardGeneric("show")
-&lt;bytecode: 0x7fcba636b2c0&gt;
-&lt;environment: 0x7fcba227b670&gt;
+&lt;bytecode: 0x7f9c5dbb70c0&gt;
+&lt;environment: 0x7f9c5c2fbe70&gt;
 Methods may be defined for arguments: object
 Use  showMethods("show")  for currently available ones.
 (This generic function excludes non-simple inheritance; see ?setIs)</code></pre>
@@ -603,13 +603,13 @@ x="bank_account"</code></pre>
 <span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scale</span>(m, <span class="at">center =</span> <span class="cn">TRUE</span>, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           [,1]       [,2]       [,3]
-[1,] -1.1263148 -0.4402255  1.0734055
-[2,]  0.7835234  1.1445862 -0.1681238
-[3,]  0.3427915 -0.7043607 -0.9052817
+[1,] -1.0653416 -1.0866224 -0.7258662
+[2,]  0.9183979  0.2050231  1.1406469
+[3,]  0.1469437  0.8815993 -0.4147807
 attr(,"scaled:center")
-[1] 0.7033333 0.5933333 0.6333333
+[1] 0.2566667 0.5166667 0.3966667
 attr(,"scaled:scale")
-[1] 0.3403430 0.3028751 0.2577466</code></pre>
+[1] 0.09073772 0.16258331 0.16072751</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sweep (apply a vector over a matrix summarizing an operation)</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># median value of each row of the matix</span></span>
@@ -617,10 +617,10 @@ attr(,"scaled:scale")
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="co"># subtracting the median value of each row</span></span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sweep</span>(m, <span class="at">MARGIN =</span> <span class="dv">1</span>, <span class="at">STATS =</span> row.med, <span class="at">FUN =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      [,1]  [,2]  [,3]
-[1,] -0.14  0.00  0.45
-[2,]  0.03  0.00 -0.35
-[3,]  0.42 -0.02  0.00</code></pre>
+<pre><code>      [,1] [,2] [,3]
+[1,] -0.12 0.06 0.00
+[2,] -0.21 0.00 0.03
+[3,] -0.06 0.33 0.00</code></pre>
 </div>
 </div>
 </section>
@@ -809,7 +809,7 @@ attr(,"scaled:scale")
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="fu">fact.recursive</span>(<span class="dv">100</span>))[<span class="st">"elapsed"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>elapsed 
-  0.002 </code></pre>
+  0.003 </code></pre>
 </div>
 </div>
 <p>And now the iteration-based one.</p>
@@ -834,8 +834,8 @@ attr(,"scaled:scale")
 <span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                test replications elapsed relative user.self sys.self
-2        fact.it(15)         5000   0.011    1.000     0.011    0.000
-1 fact.recursive(15)         5000   0.140   12.727     0.137    0.002
+2        fact.it(15)         5000   0.011    1.000     0.010    0.000
+1 fact.recursive(15)         5000   0.140   12.727     0.137    0.003
   user.child sys.child
 2          0         0
 1          0         0</code></pre>
@@ -1102,6 +1102,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+      <div class="nav-footer-center">Copyright 2023, Mattia Toninelli</div>
+  </div>
+</footer>
 
 
 

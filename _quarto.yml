@@ -22,8 +22,7 @@ website:
         href: https://github.com/mtoninel
       - icon: twitter
         href: https://twitter.com/toninells
-  page-footer: 
-    center: "Copyright 2023, Mattia Toninelli"
+  page-footer: "Copyright 2023, Mattia Toninelli"
 
 # Themes, can be changed with .css files and .scss 
 format:
